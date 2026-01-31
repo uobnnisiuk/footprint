@@ -33,4 +33,13 @@ Blank is explicit, not inferred.
 ## Hard Rules
 - No inference fields
 - No overwrites (no update-in-place)
-- Derived views belong to L2, not L0
+- Derived views belong to L2, not L0）
+- IF-LOSSLESS-001 を参照
+
+## Implementation Constraints (Bootstrap Slice)
+
+最初のスライスでの技術選択。後続で変更可（mini RFC で決定）。
+
+- IF-IMPL-001: インターフェースは CLI (stdin JSON → stdout JSON) で開始。API は後続。
+- IF-IMPL-002: 永続化はローカルファイル (JSON Lines) で開始。DB は後続。
+- IF-IMPL-003: 実装言語は Rust (`core/` crate)。

@@ -22,6 +22,10 @@ Reduce early decision mistakes in rescue by providing:
 - Prefer robustness over many features
 - Prefer explicit blank over false certainty
 - Prefer habit-friendly use (normal routine)
+- **IF-LOSSLESS-001**: 観測された痕跡は、UI/集約/フィルタの都合で到達不能にしない（ドリルダウン経路を必ず残す）
+- **IF-SEARCH-001**: 探索モードの情報開示レベル
+  - オープン探索 → 「存在のみ」（同一性・特定に至る情報は返さない）
+  - 対象キー探索 → 「同一性・特定あり得る」（キー保持者のみ到達可能）
 
 ## Layering (Hard boundaries)
 - L0: Footprint Core (facts + blank, append-only, SSOT)
