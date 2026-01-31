@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs/constitution/contracts/trace.schema.json",
+  "title": "Trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["traceId", "deviceId", "capturedAt", "kind"],
+  "properties": {
+    "traceId": { "type": "string", "minLength": 1 },
+    "deviceId": { "type": "string", "minLength": 1 },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "kind": { "type": "string", "enum": ["beacon", "manual", "sensor", "network"] },
+    "payload": { "type": "object" }
+  }
+}
