@@ -32,7 +32,7 @@ AGENTS.md は「運用・手順・品質ゲート・SSOTの置き場所」を固
   - 共有コンテキスト束: `artifacts/packs/`
   - 実行ログ/証跡: `artifacts/runs/`
   - 提出/共有する最終物: `artifacts/outbox/`
-  - テンプレート: `artifacts/templates/`
+  - テンプレート: `artifacts/templates/`（ExecPlan/runログ等の雛形。必要になったら追加）
 - 品質ゲート（単一エントリポイント）: `./ci.sh`
 
 迷ったらこのパス定義を優先する。
