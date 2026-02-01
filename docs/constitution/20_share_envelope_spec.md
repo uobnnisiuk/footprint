@@ -11,7 +11,9 @@ Transport is adapter-only; Share Engine does not depend on BLE/HTTP/etc.
 - source_id: privacy-safe identifier (policy decided elsewhere)
 - payload_events: [Core Event]
 - integrity:
-  - hash_chain OR signature OR both (choose implementation later, semantics fixed: offline verifiable)
+  - hash_chain + signature（両方必須を推奨）
+  - 根拠: 15_behavior_spec.md / IDEA-0003 の「署名＋hash chain」設計方針と整合
+  - semantics fixed: offline verifiable
 
 ### Optional
 - chunking/compression metadata

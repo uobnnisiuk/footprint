@@ -2,14 +2,34 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "docs/constitution/contracts/trace.schema.json",
   "title": "Trace",
+  "description": "実装契約スキーマ。概念定義は 10_core_fact_spec.md を参照。フィールド名の対応: traceId=event_id, capturedAt=committed_at, kind≒time_source（実装で拡張）",
   "type": "object",
   "additionalProperties": false,
   "required": ["traceId", "deviceId", "capturedAt", "kind"],
   "properties": {
-    "traceId": { "type": "string", "minLength": 1 },
-    "deviceId": { "type": "string", "minLength": 1 },
-    "capturedAt": { "type": "string", "format": "date-time" },
-    "kind": { "type": "string", "enum": ["beacon", "manual", "sensor", "network"] },
-    "payload": { "type": "object" }
+    "traceId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "一意識別子（spec: event_id）"
+    },
+    "deviceId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "デバイス識別子"
+    },
+    "capturedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "記録時刻（spec: committed_at）"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["beacon", "manual", "sensor", "network"],
+      "description": "痕跡の種別（spec: time_source を実装で拡張）"
+    },
+    "payload": {
+      "type": "object",
+      "description": "追加データ（location, state 等を格納）"
+    }
   }
 }

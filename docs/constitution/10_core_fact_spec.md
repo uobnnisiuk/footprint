@@ -33,7 +33,7 @@ Blank is explicit, not inferred.
 ## Hard Rules
 - No inference fields
 - No overwrites (no update-in-place)
-- Derived views belong to L2, not L0）
+- Derived views belong to L2, not L0
 - IF-LOSSLESS-001 を参照
 
 ## Implementation Constraints (Bootstrap Slice)
