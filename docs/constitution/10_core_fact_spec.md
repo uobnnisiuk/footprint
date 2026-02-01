@@ -36,6 +36,41 @@ Blank is explicit, not inferred.
 - Derived views belong to L2, not L0
 - IF-LOSSLESS-001 を参照
 
+## Canonicalization（正規化）
+
+L0 は「ハッシュ入力としての正」を定義する。L1 が hash chain を構築する際、迷わず同じ bytes をハッシュできるようにするため。
+
+### 正規化ルール
+
+- **フィールド順序**: アルファベット順（ネストも再帰的に）
+- **エンコーディング**: UTF-8（BOM なし）
+- **時刻表現**: ISO 8601 拡張形式（例: `2026-02-01T12:34:56.789Z`）、ミリ秒精度、UTC 固定
+- **数値**: 整数は符号付き64bit、浮動小数点は IEEE 754 double、不要な末尾ゼロは削除
+- **null/省略**: null は省略ではなく明示的に `null` として出力
+- **配列**: 順序保持
+
+### canonical(event) の定義
+
+```
+canonical(event) = serialize_json_canonical(event)
+```
+
+L1 は `canonical(event)` を入力として hash chain を構築する。
+
+### L0 の暗号学的 integrity
+
+**L0 は暗号学的 integrity（署名・hash chain）を持たない。**
+
+- append-only は「意味論（上書き禁止）」として保証
+- 改ざん検出は L1 の envelope に委譲
+- 根拠: RFC-0002 (IF-INTEG-001)
+
+### 不変条件
+
+- **IF-CANON-001**: フィールド順序はアルファベット順で固定
+- **IF-CANON-002**: 時刻は UTC・ミリ秒精度で固定
+- **IF-INTEG-001**: L0 は暗号学的 integrity を持たない（正規化の定義までが責務）
+
 ## T3 Activation Rules (災害モード発動ルール)
 
 T3（災害モード）は、通常運用から災害時運用へ挙動を切り替えるためのトリガーである。
