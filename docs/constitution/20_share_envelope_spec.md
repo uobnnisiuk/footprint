@@ -80,3 +80,4 @@ Outbox stores envelopes pending delivery.
 - No event invention / no mutation
 - Transport-specific logic stays in adapters
 - Envelope must be verifiable offline
+- **QUEUED state is crash-durable**: enqueue が成功を返したエントリは、アプリ/OSクラッシュ後の再起動で必ず QUEUED 状態として残る（ロストしない）。これにより Notified（送達キュー永続登録）の成立条件を満たす。
