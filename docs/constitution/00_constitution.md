@@ -46,7 +46,8 @@ Everything else is explanatory or derived.
 - Workers must NOT change SSOT inside implementation tasks
 
 ## Related (Non-SSOT docs)
-- docs/philosophy.md
-- docs/non-goals.md
-- docs/use-cases.md
-- docs/adr/0001-layering.md
+<!-- TODO: 以下は将来作成予定。作成後にこのコメントを削除 -->
+- docs/philosophy.md (未作成)
+- docs/non-goals.md (未作成)
+- docs/use-cases.md (未作成)
+- docs/adr/0001-layering.md (未作成)
