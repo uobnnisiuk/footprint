@@ -111,3 +111,21 @@ T3（災害モード）は、通常運用から災害時運用へ挙動を切り
 - IF-IMPL-001: インターフェースは CLI (stdin JSON → stdout JSON) で開始。API は後続。
 - IF-IMPL-002: 永続化はローカルファイル (JSON Lines) で開始。DB は後続。
 - IF-IMPL-003: 実装言語は Rust (`core/` crate)。
+
+## OPEN Index (Unresolved Tracking)
+
+この章は未決事項の所在索引のみを定義する。ここで仕様確定は行わない。
+
+| ID | 未決テーマ | 追跡先 |
+|----|------------|--------|
+| OPEN-001 | オープン探索の「存在」の粒度（エリア/時間窓） | `docs/constitution/15_behavior_spec.md` Section 7, `docs/risks.md` OPEN-001 |
+| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/risks.md` OPEN-003 |
+| OPEN-004 | 確度（スコア）の表示上の意味 | `docs/risks.md` OPEN-004 |
+| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/risks.md` OPEN-005 |
+| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | `docs/constitution/15_behavior_spec.md` Sections 3-5, `docs/risks.md` OPEN-006 |
+| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | `docs/constitution/15_behavior_spec.md` Section 5, `docs/risks.md` OPEN-007 |
+| OPEN-008 | サイレント遭遇中継のスパム対策 | `docs/constitution/15_behavior_spec.md` Section 5, `docs/risks.md` OPEN-008 |
+| OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | `docs/constitution/15_behavior_spec.md` Section 2, `docs/risks.md` OPEN-010 |
+| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | `docs/constitution/15_behavior_spec.md` Section 3, `docs/risks.md` OPEN-011 |
+| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法 | `docs/constitution/15_behavior_spec.md` Section 2.1, `docs/risks.md` OPEN-012 |
+| OPEN-013 | T3=ON でオープン探索粒度が変わる場合の影響 | `docs/risks.md` OPEN-013 |

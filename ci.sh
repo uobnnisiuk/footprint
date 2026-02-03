@@ -8,76 +8,102 @@ cd "$ROOT"
 echo "[ci] start"
 
 ran=0
-run() {
-  ran=1
-  "$@"
+
+fail_with_hint() {
+  local message="$1"
+  local hint="$2"
+  echo "[ci] ERROR: ${message}"
+  echo "[ci] HINT : ${hint}"
+  exit 1
 }
 
-# --- Always-on minimal checks (bootstrapでも必ず何か走る) ---
-run test -f AGENTS.md
+run() {
+  ran=1
+  if ! "$@"; then
+    fail_with_hint "command failed: $*" "inspect the failure above, apply a minimal diff fix, then rerun ./ci.sh"
+  fi
+}
 
-run test -f docs/constitution/00_constitution.md
-run test -f docs/constitution/10_core_fact_spec.md
-run test -f docs/constitution/20_share_envelope_spec.md
-run test -f docs/rfc/RFC-0000-template.md
+require_file() {
+  local path="$1"
+  local hint="$2"
+  ran=1
+  if ! test -f "$path"; then
+    fail_with_hint "missing ${path}" "${hint}"
+  fi
+}
 
-run test -f artifacts/inbox/tasks/TASK-0000-template.md
-run test -f artifacts/packs/CP-0000-template.md
+always_on_checks() {
+  echo "[ci] phase: always_on"
+  require_file AGENTS.md "restore AGENTS.md (operation SSOT)"
+  require_file docs/constitution/00_constitution.md "restore constitution SSOT docs"
+  require_file docs/constitution/10_core_fact_spec.md "restore core fact SSOT docs"
+  require_file docs/constitution/20_share_envelope_spec.md "restore share envelope SSOT docs"
+  require_file docs/constitution/30_testplan.md "create or restore Acceptance/TST SSOT"
+  require_file docs/rfc/RFC-0000-template.md "restore RFC template SSOT"
+  require_file artifacts/inbox/tasks/TASK-0000-template.md "restore task template"
+  require_file artifacts/packs/CP-0000-template.md "restore context-pack template"
+  require_file docs/constitution/contracts/trace.schema.json "create or restore trace contract schema"
 
-# Required SSOT for autonomous mode (bootstrapで追加する前提)
-if test -f docs/constitution/30_testplan.md; then
-  run true
-else
-  echo "[ci] ERROR: missing docs/constitution/30_testplan.md"
-  echo "[ci] HINT : create the bootstrap template for Acceptance/TST SSOT"
-  exit 1
-fi
-
-if test -f docs/constitution/contracts/trace.schema.json; then
   if command -v python3 >/dev/null 2>&1; then
     run python3 -m json.tool docs/constitution/contracts/trace.schema.json >/dev/null
   elif command -v node >/dev/null 2>&1; then
     run node -e "JSON.parse(require('fs').readFileSync('docs/constitution/contracts/trace.schema.json','utf8'));"
   else
-    echo "[ci] ERROR: need python3 or node to validate JSON (trace.schema.json)"
-    exit 1
+    fail_with_hint "need python3 or node to validate docs/constitution/contracts/trace.schema.json" "install python3 or node, then rerun ./ci.sh"
   fi
-else
-  echo "[ci] ERROR: missing docs/constitution/contracts/trace.schema.json"
-  echo "[ci] HINT : create the bootstrap contract schema (SSOT)"
-  exit 1
-fi
+}
 
-# --- Optional project checks (存在するものだけ実行) ---
-# Rust
-if test -f core/Cargo.toml; then run cargo test --manifest-path core/Cargo.toml; fi
-if test -f share/Cargo.toml; then run cargo test --manifest-path share/Cargo.toml; fi
-if test -f aggregate/Cargo.toml; then run cargo test --manifest-path aggregate/Cargo.toml; fi
-if test -f platform/Cargo.toml; then run cargo test --manifest-path platform/Cargo.toml; fi
-
-# Node backend
-if test -f backend/package.json; then
-  if command -v pnpm >/dev/null 2>&1; then
-    run pnpm -C backend test
-  elif command -v npm >/dev/null 2>&1; then
-    run bash -lc "cd backend && npm test"
-  elif command -v yarn >/dev/null 2>&1; then
-    run bash -lc "cd backend && yarn test"
-  else
-    echo "[ci] ERROR: backend/package.json exists but no package manager found (pnpm/npm/yarn)"
-    exit 1
+run_rust_tests_if_present() {
+  local manifest="$1"
+  if ! test -f "$manifest"; then
+    return 0
   fi
-fi
 
-# Android
-if test -f android/gradlew; then
-  run bash -lc "cd android && ./gradlew test"
-fi
+  if ! command -v cargo >/dev/null 2>&1; then
+    fail_with_hint "${manifest} exists but cargo is unavailable (tests would be skipped)" "install Rust toolchain (cargo) so implementation tests can run"
+  fi
 
-# --- No-op green guard ---
-if test "$ran" -eq 0; then
-  echo "[ci] ERROR: no-op green is forbidden. Add at least one real check."
-  exit 1
-fi
+  run cargo test --manifest-path "$manifest"
+}
 
-echo "[ci] green"
+optional_checks() {
+  echo "[ci] phase: optional"
+  # Policy: if implementation exists, corresponding tests must run (skip is not allowed).
+  run_rust_tests_if_present core/Cargo.toml
+  run_rust_tests_if_present share/Cargo.toml
+  run_rust_tests_if_present aggregate/Cargo.toml
+  run_rust_tests_if_present platform/Cargo.toml
+
+  if test -f backend/package.json; then
+    if command -v pnpm >/dev/null 2>&1; then
+      run pnpm -C backend test
+    elif command -v npm >/dev/null 2>&1; then
+      run bash -lc "cd backend && npm test"
+    elif command -v yarn >/dev/null 2>&1; then
+      run bash -lc "cd backend && yarn test"
+    else
+      fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "install pnpm, npm, or yarn so backend tests can run"
+    fi
+  fi
+
+  if test -f android/gradlew; then
+    run bash -lc "cd android && ./gradlew test"
+  fi
+}
+
+guard_checks() {
+  echo "[ci] phase: guard"
+  if test "$ran" -eq 0; then
+    fail_with_hint "no-op green is forbidden" "configure at least one real check target in ./ci.sh"
+  fi
+}
+
+main() {
+  always_on_checks
+  optional_checks
+  guard_checks
+  echo "[ci] green"
+}
+
+main "$@"

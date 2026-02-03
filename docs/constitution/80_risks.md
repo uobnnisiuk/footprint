@@ -134,6 +134,9 @@
 
 ## OPEN（未解決の設計判断）
 
+- 索引（SSOT）: `docs/constitution/10_core_fact_spec.md` の OPEN Index
+- 挙動仕様の関連箇所: `docs/constitution/15_behavior_spec.md` Section 7
+
 | ID | 内容 | 関連懸念 | 状態 |
 |----|------|----------|------|
 | OPEN-001 | オープン探索の「存在」の粒度（エリア？時間窓？） | C-002, C-006 | 未解決 |
