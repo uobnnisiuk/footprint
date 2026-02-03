@@ -1,9 +1,10 @@
-Mode A attempt from TASK-0300 invoked this task via child codex, but execution failed before agent response.
+`./ci.sh` を最小Diffで育成して、責務構造を維持したまま読みやすさと復旧速度を上げました。
 
-Failure summary:
-- default CODEX_HOME: permission denied at /home/higuchi/.codex/sessions
-- workspace-local CODEX_HOME + config: repeated network disconnects to https://api.openai.com/v1/responses
-- subagents MCP startup timeout also observed
+- `ci.sh:70` に `run_backend_tests_if_present` を追加し、optional の backend 分岐を整理（重複削減、挙動は維持）
+- `ci.sh:101` で optional 側は新ヘルパー呼び出しに置換（「実装があるのにスキップしない」方針はそのまま）
+- `ci.sh:23` の失敗時 HINT を1箇所だけ具体化（失敗コマンドの先行再実行→最小修正→`./ci.sh` 再実行）
+- 実行ログを `artifacts/runs/TASK-0200-agent4-ci.out.md:1` に更新
 
-Result:
-- No agent4 patch was applied in this run.
+検証:
+- `./ci.sh` 実行結果: green（TST-0200-1）
+- no-op green 禁止ガードは維持（`ci.sh:108`）

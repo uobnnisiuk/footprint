@@ -20,7 +20,7 @@ fail_with_hint() {
 run() {
   ran=1
   if ! "$@"; then
-    fail_with_hint "command failed: $*" "inspect the failure above, apply a minimal diff fix, then rerun ./ci.sh"
+    fail_with_hint "command failed: $*" "rerun the failed command for fast iteration, apply a minimal diff fix, then rerun ./ci.sh"
   fi
 }
 
@@ -67,6 +67,29 @@ run_rust_tests_if_present() {
   run cargo test --manifest-path "$manifest"
 }
 
+run_backend_tests_if_present() {
+  if ! test -f backend/package.json; then
+    return 0
+  fi
+
+  if command -v pnpm >/dev/null 2>&1; then
+    run pnpm -C backend test
+    return 0
+  fi
+
+  if command -v npm >/dev/null 2>&1; then
+    run bash -lc "cd backend && npm test"
+    return 0
+  fi
+
+  if command -v yarn >/dev/null 2>&1; then
+    run bash -lc "cd backend && yarn test"
+    return 0
+  fi
+
+  fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "install pnpm, npm, or yarn so backend tests can run"
+}
+
 optional_checks() {
   echo "[ci] phase: optional"
   # Policy: if implementation exists, corresponding tests must run (skip is not allowed).
@@ -75,17 +98,7 @@ optional_checks() {
   run_rust_tests_if_present aggregate/Cargo.toml
   run_rust_tests_if_present platform/Cargo.toml
 
-  if test -f backend/package.json; then
-    if command -v pnpm >/dev/null 2>&1; then
-      run pnpm -C backend test
-    elif command -v npm >/dev/null 2>&1; then
-      run bash -lc "cd backend && npm test"
-    elif command -v yarn >/dev/null 2>&1; then
-      run bash -lc "cd backend && yarn test"
-    else
-      fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "install pnpm, npm, or yarn so backend tests can run"
-    fi
-  fi
+  run_backend_tests_if_present
 
   if test -f android/gradlew; then
     run bash -lc "cd android && ./gradlew test"

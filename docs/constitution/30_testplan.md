@@ -11,6 +11,8 @@
   - 観測手順（例）: `python3 -c "import json,sys; req=set(json.load(open('docs/constitution/contracts/trace.schema.json'))['required']); need={'traceId','deviceId','capturedAt','kind'}; print('required=',sorted(req)); sys.exit(0 if need<=req else 1)"`
 - TST-0006: `docs/constitution/contracts/trace.schema.json` が未知フィールドを拒否する（`additionalProperties: false`）ことを観測できる
   - 観測手順（例）: `python3 -c "import json,sys; s=json.load(open('docs/constitution/contracts/trace.schema.json')); print('additionalProperties=',s.get('additionalProperties')); sys.exit(0 if s.get('additionalProperties') is False else 1)"`
+- TST-0007: `docs/constitution/contracts/trace.schema.json` の `kind` 列挙値が `beacon` / `manual` / `sensor` / `network` を含むことを観測できる
+  - 観測手順（例）: `python3 -c "import json,sys; e=set(json.load(open('docs/constitution/contracts/trace.schema.json'))['properties']['kind']['enum']); need={'beacon','manual','sensor','network'}; print('kind.enum=',sorted(e)); sys.exit(0 if need<=e else 1)"`
 
 ## Non-negotiable rules
 - “通すために弱める変更”は禁止
