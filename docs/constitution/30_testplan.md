@@ -15,6 +15,8 @@
   - 観測手順（例）: `python3 -c "import json,sys; e=set(json.load(open('docs/constitution/contracts/trace.schema.json'))['properties']['kind']['enum']); need={'beacon','manual','sensor','network'}; print('kind.enum=',sorted(e)); sys.exit(0 if need<=e else 1)"`
 - TST-0008: `docs/constitution/contracts/trace.schema.json` の `capturedAt` が `type=string` かつ `format=date-time` であることを観測できる
   - 観測手順（例）: `python3 -c "import json,sys; p=json.load(open('docs/constitution/contracts/trace.schema.json'))['properties']['capturedAt']; ok=(p.get('type')=='string' and p.get('format')=='date-time'); print('capturedAt=',p); sys.exit(0 if ok else 1)"`
+- TST-0009: `docs/constitution/contracts/trace.schema.json` の `payload` が任意（`required` に含まれない）かつ `type=object` であることを観測できる
+  - 観測手順（例）: `python3 -c "import json,sys; s=json.load(open('docs/constitution/contracts/trace.schema.json')); req=set(s.get('required',[])); p=s['properties'].get('payload',{}); ok=('payload' not in req and p.get('type')=='object'); print('payload=',p,'required_contains_payload=',('payload' in req)); sys.exit(0 if ok else 1)"`
 
 ## Non-negotiable rules
 - “通すために弱める変更”は禁止

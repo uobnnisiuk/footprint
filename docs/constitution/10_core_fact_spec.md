@@ -118,16 +118,16 @@ T3（災害モード）は、通常運用から災害時運用へ挙動を切り
 対象は未決の `OPEN-001,003,004,005,006,007,008,010,011,012,013`（`OPEN-002,009` は解決済み）。
 追跡は「一次参照（`docs/constitution/`）→ 補助参照（`docs/rfc/`）」の順で行う。
 
-| ID | 未決テーマ | 追跡先 |
-|----|------------|--------|
-| OPEN-001 | オープン探索の「存在」の粒度（エリア/時間窓） | 一次: `docs/constitution/15_behavior_spec.md` Sections 1.2, 7（OPEN-001）, `docs/constitution/80_risks.md` OPEN-001 |
-| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | 一次: `docs/constitution/15_behavior_spec.md` Section 7（OPEN-003）, `docs/constitution/80_risks.md` OPEN-003 / 補助: `docs/rfc/RFC-0001-t3-activation-rules.md` OPEN-003 |
-| OPEN-004 | 確度（スコア）の表示上の意味 | 一次: `docs/constitution/15_behavior_spec.md` Section 7（OPEN-004）, `docs/constitution/80_risks.md` OPEN-004 |
-| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | 一次: `docs/constitution/15_behavior_spec.md` Section 7（OPEN-005）, `docs/constitution/80_risks.md` OPEN-005 |
-| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | 一次: `docs/constitution/15_behavior_spec.md` Sections 3-5, 7（OPEN-006）, `docs/constitution/80_risks.md` OPEN-006 |
-| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | 一次: `docs/constitution/15_behavior_spec.md` Sections 5, 7（OPEN-007）, `docs/constitution/80_risks.md` OPEN-007 |
-| OPEN-008 | サイレント遭遇中継のスパム対策 | 一次: `docs/constitution/15_behavior_spec.md` Sections 5, 7（OPEN-008）, `docs/constitution/80_risks.md` OPEN-008 |
-| OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | 一次: `docs/constitution/15_behavior_spec.md` Sections 2, 7（OPEN-010）, `docs/constitution/80_risks.md` OPEN-010 |
-| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | 一次: `docs/constitution/15_behavior_spec.md` Sections 3, 7（OPEN-011）, `docs/constitution/80_risks.md` OPEN-011 / 補助: `docs/rfc/RFC-0002-notification-queue-persistence.md` OPEN-011 メモ |
-| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法 | 一次: `docs/constitution/15_behavior_spec.md` Sections 2.1, 7（OPEN-012）, `docs/constitution/80_risks.md` OPEN-012 / 補助: `docs/rfc/RFC-0001-t3-activation-rules.md` OPEN-012 |
-| OPEN-013 | T3=ON でオープン探索粒度が変わる場合の影響 | 一次: `docs/constitution/15_behavior_spec.md` Section 7（OPEN-013）, `docs/constitution/80_risks.md` OPEN-013 / 補助: `docs/rfc/RFC-0001-t3-activation-rules.md`, `docs/rfc/DEC-0001-t3-activation-rules.md` |
+| ID | 未決テーマ | 一次参照（constitution） | 補助参照（rfc/dec） |
+|----|------------|--------------------------|----------------------|
+| OPEN-001 | オープン探索の「存在」の粒度（エリア/時間窓） | `docs/constitution/15_behavior_spec.md` Sections 1.2, 7（OPEN-001） / `docs/constitution/80_risks.md` OPEN-001 | — |
+| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-003） / `docs/constitution/80_risks.md` OPEN-003 | `docs/rfc/RFC-0001-t3-activation-rules.md` OPEN-003 |
+| OPEN-004 | 確度（スコア）の表示上の意味 | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-004） / `docs/constitution/80_risks.md` OPEN-004 | — |
+| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-005） / `docs/constitution/80_risks.md` OPEN-005 | — |
+| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | `docs/constitution/15_behavior_spec.md` Sections 3-5, 7（OPEN-006） / `docs/constitution/80_risks.md` OPEN-006 | — |
+| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | `docs/constitution/15_behavior_spec.md` Sections 5, 7（OPEN-007） / `docs/constitution/80_risks.md` OPEN-007 | — |
+| OPEN-008 | サイレント遭遇中継のスパム対策 | `docs/constitution/15_behavior_spec.md` Sections 5, 7（OPEN-008） / `docs/constitution/80_risks.md` OPEN-008 | — |
+| OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | `docs/constitution/15_behavior_spec.md` Sections 2, 7（OPEN-010） / `docs/constitution/80_risks.md` OPEN-010 | — |
+| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | `docs/constitution/15_behavior_spec.md` Sections 3, 7（OPEN-011） / `docs/constitution/80_risks.md` OPEN-011 | `docs/rfc/RFC-0002-notification-queue-persistence.md`（OPEN-011 メモ） |
+| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法 | `docs/constitution/15_behavior_spec.md` Sections 2.1, 7（OPEN-012） / `docs/constitution/80_risks.md` OPEN-012 | `docs/rfc/RFC-0001-t3-activation-rules.md` OPEN-012 |
+| OPEN-013 | T3=ON でオープン探索粒度が変わる場合の影響 | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-013） / `docs/constitution/80_risks.md` OPEN-013 | `docs/rfc/RFC-0001-t3-activation-rules.md` / `docs/rfc/DEC-0001-t3-activation-rules.md` |

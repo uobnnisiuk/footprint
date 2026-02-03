@@ -20,7 +20,10 @@ fail_with_hint() {
 run() {
   ran=1
   if ! "$@"; then
-    fail_with_hint "command failed: $*" "rerun the failed command for fast iteration, apply a minimal diff fix, then rerun ./ci.sh"
+    local cmd
+    cmd="$(printf '%q ' "$@")"
+    cmd="${cmd% }"
+    fail_with_hint "command failed: ${cmd}" "rerun exactly: ${cmd}; apply a minimal diff fix, then rerun ./ci.sh"
   fi
 }
 
