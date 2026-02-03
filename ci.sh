@@ -93,14 +93,23 @@ run_backend_tests_if_present() {
 optional_checks() {
   echo "[ci] phase: optional"
   # Policy: if implementation exists, corresponding tests must run (skip is not allowed).
-  run_rust_tests_if_present core/Cargo.toml
-  run_rust_tests_if_present share/Cargo.toml
-  run_rust_tests_if_present aggregate/Cargo.toml
-  run_rust_tests_if_present platform/Cargo.toml
+  local rust_manifests=(
+    core/Cargo.toml
+    share/Cargo.toml
+    aggregate/Cargo.toml
+    platform/Cargo.toml
+  )
+  local manifest
+  for manifest in "${rust_manifests[@]}"; do
+    run_rust_tests_if_present "$manifest"
+  done
 
   run_backend_tests_if_present
 
   if test -f android/gradlew; then
+    if ! command -v java >/dev/null 2>&1; then
+      fail_with_hint "android/gradlew exists but java is unavailable (tests would fail)" "install a JDK and rerun ./ci.sh"
+    fi
     run bash -lc "cd android && ./gradlew test"
   fi
 }

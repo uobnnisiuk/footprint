@@ -1,6 +1,7 @@
-観測可能なAcceptanceを1本、最小Diffで追加しました。
+`docs/constitution/30_testplan.md` のみ最小Diffで更新しました。
 
-- 追加: `docs/constitution/30_testplan.md:14` に `TST-0007` を追加（`kind` の enum が `beacon` / `manual` / `sensor` / `network` を含むことを観測）。
-- 観測手順: `docs/constitution/30_testplan.md:15` に 1行コマンド例を追記。
-- 維持: `TST-0001`〜`TST-0004`（既存 `TST-0005`,`TST-0006` 含む）に弱体化変更なし。
-- 検証: `./ci.sh` 実行済み、green を確認しました。
+- 追加: 観測可能な新規Acceptance `TST-0008`（`capturedAt` が `type=string` かつ `format=date-time`）と、1行の観測コマンド例を追記しました（`docs/constitution/30_testplan.md:16`、`docs/constitution/30_testplan.md:17`）。
+- 既存の `TST-0001`〜`TST-0004` はそのまま維持しています。
+- `./ci.sh` を実行し、green を確認済みです。
+
+※ 既に存在していた他ファイルの未コミット変更は触っていません。

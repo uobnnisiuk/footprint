@@ -1,10 +1,9 @@
-`./ci.sh` を最小Diffで育成して、責務構造を維持したまま読みやすさと復旧速度を上げました。
+`TASK-0200` を実施して、`./ci.sh` を最小Diffで育成しました。
 
-- `ci.sh:70` に `run_backend_tests_if_present` を追加し、optional の backend 分岐を整理（重複削減、挙動は維持）
-- `ci.sh:101` で optional 側は新ヘルパー呼び出しに置換（「実装があるのにスキップしない」方針はそのまま）
-- `ci.sh:23` の失敗時 HINT を1箇所だけ具体化（失敗コマンドの先行再実行→最小修正→`./ci.sh` 再実行）
-- 実行ログを `artifacts/runs/TASK-0200-agent4-ci.out.md:1` に更新
+- `ci.sh:96` で Rust の `Cargo.toml` 実行箇所を配列+ループ化し、`optional` の重複を整理（責務は維持）。
+- `ci.sh:110` で Android テスト前に `java` 有無を明示チェックし、失敗時 HINT を具体化。
+- no-op green 禁止ガードは維持（`ci.sh:117`）。
+- 実行ログを更新（`artifacts/runs/TASK-0200-agent4-ci.out.md`）。
 
 検証:
-- `./ci.sh` 実行結果: green（TST-0200-1）
-- no-op green 禁止ガードは維持（`ci.sh:108`）
+- `./ci.sh` は green を確認済み。
