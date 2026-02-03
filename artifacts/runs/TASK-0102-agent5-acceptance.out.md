@@ -1,8 +1,8 @@
-対応しました。受け入れ条件を1本だけ具体化し、観測コマンドも追記しています。
+`docs/constitution/30_testplan.md` に観測可能なAcceptanceを1本追加しました。  
+- 追加: `TST-0006`（`trace.schema.json` が `additionalProperties: false` で未知フィールド拒否になることをコマンドで観測）
+- 観測手順例（1行）も同ファイル内に追記済み
+- 既存の `TST-0001`〜`TST-0005` は維持（弱体化なし）
 
-- `docs/constitution/30_testplan.md:10` に `TST-0005` を追加  
-  - 内容: `trace.schema.json` の `required` に `traceId/deviceId/capturedAt/kind` が含まれることを観測可能に定義
-- `docs/constitution/30_testplan.md:11` に観測手順（1行コマンド）を追加
-- 既存の `TST-0001`〜`TST-0004` は変更していません
-- `./ci.sh` 実行結果は green（`[ci] green`）
-- 実行ログを `artifacts/runs/TASK-0102-agent5-acceptance.out.md` に保存済みです
+検証:
+- `./ci.sh` 実行結果は green
+- 実行ログ: `artifacts/runs/TASK-0102-agent5-acceptance.out.md`

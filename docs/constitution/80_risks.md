@@ -1,4 +1,4 @@
-# 懸念事項リスト（risks.md）
+# 懸念事項リスト（docs/constitution/80_risks.md）
 
 懸念事項の管理ファイル。不変条件（IF）は `docs/constitution/` を参照。
 

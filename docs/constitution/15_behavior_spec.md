@@ -402,20 +402,20 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 
 | ID | 内容 | 追跡先 |
 |----|------|--------|
-| OPEN-001 | オープン探索の「存在」の粒度（エリア？時間窓？） | 本文 Section 1.2, `docs/risks.md` OPEN-001 |
-| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/risks.md` OPEN-003 |
-| OPEN-004 | 確度（スコア）の表示上の意味 | `docs/risks.md` OPEN-004 |
-| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/risks.md` OPEN-005 |
-| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | 本文 Sections 3-5（関連仕様）, `docs/risks.md` OPEN-006 |
-| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | 本文 Section 5, `docs/risks.md` OPEN-007 |
-| OPEN-008 | サイレント遭遇中継のスパム対策 | 本文 Section 5, `docs/risks.md` OPEN-008 |
-| OPEN-010 | 権限救助者（Authorized Rescue）の定義 | 本文 Section 2, `docs/risks.md` OPEN-010 |
-| OPEN-011 | 通知内容の最小セット | 本文 Section 3, `docs/risks.md` OPEN-011 |
-| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | 本文 Section 2.1, `docs/risks.md` OPEN-012 |
-| OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響 | `docs/risks.md` OPEN-013 |
+| OPEN-001 | オープン探索の「存在」の粒度（エリア？時間窓？） | 本文 Section 1.2, `docs/constitution/80_risks.md` OPEN-001 |
+| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/constitution/80_risks.md` OPEN-003 |
+| OPEN-004 | 確度（スコア）の表示上の意味 | `docs/constitution/80_risks.md` OPEN-004 |
+| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/constitution/80_risks.md` OPEN-005 |
+| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | 本文 Sections 3-5（関連仕様）, `docs/constitution/80_risks.md` OPEN-006 |
+| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-007 |
+| OPEN-008 | サイレント遭遇中継のスパム対策 | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-008 |
+| OPEN-010 | 権限救助者（Authorized Rescue）の定義 | 本文 Section 2, `docs/constitution/80_risks.md` OPEN-010 |
+| OPEN-011 | 通知内容の最小セット | 本文 Section 3, `docs/constitution/80_risks.md` OPEN-011 |
+| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | 本文 Section 2.1, `docs/constitution/80_risks.md` OPEN-012 |
+| OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響 | `docs/constitution/80_risks.md` OPEN-013 |
 
 ※OPEN-009（link の条件）は Section 2.1 で解決済み。
-※全OPEN一覧の索引は `docs/constitution/10_core_fact_spec.md` の OPEN Index と `docs/risks.md` を参照。
+※全OPEN一覧の索引は `docs/constitution/10_core_fact_spec.md` の OPEN Index と `docs/constitution/80_risks.md` を参照。
 
 ---
 
@@ -424,4 +424,4 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 - `00_constitution.md` — 運用原則・不変条件の定義
 - `10_core_fact_spec.md` — L0（Core Fact）データモデル
 - `20_share_envelope_spec.md` — L1（Share Envelope）転送仕様
-- `risks.md` — 懸念事項・RISK・OPEN の管理
+- `80_risks.md` — 懸念事項・RISK・OPEN の管理

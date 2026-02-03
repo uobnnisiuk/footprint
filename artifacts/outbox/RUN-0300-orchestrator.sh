@@ -10,6 +10,7 @@ echo "[run-0300] start $(date -Iseconds)"
 
 if ! command -v codex >/dev/null 2>&1; then
   echo "[run-0300] ERROR: codex command not found"
+  echo "[run-0300] HINT : install codex CLI and rerun this script"
   exit 1
 fi
 
@@ -27,7 +28,7 @@ run_task() {
   ./ci.sh
 }
 
-# Preflight
+echo "[run-0300] preflight ./ci.sh"
 ./ci.sh
 
 # Ordered orchestration cycle (agent4 -> agent1 -> agent5)

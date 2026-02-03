@@ -1,9 +1,8 @@
-未決OPENの追跡導線を、最小Diffで整理しました（仕様の新規確定はしていません）。
+対応完了しました。最小Diffで OPEN 追跡を整理しています。
 
-- `docs/constitution/10_core_fact_spec.md:115` に `OPEN Index (Unresolved Tracking)` を追加し、対象11件（OPEN-001,003,004,005,006,007,008,010,011,012,013）の参照先を明示。
-- `docs/constitution/15_behavior_spec.md:401` の「残OPEN一覧」を同じ11件に揃え、各IDの追跡先（本文節 or `docs/risks.md`）を追加。
-- `docs/risks.md:135` に索引参照を追記し、`10_core_fact_spec.md` / `15_behavior_spec.md` との参照関係を明確化。
-- 実行ログを `artifacts/runs/TASK-0101-agent1-spec.out.md` に作成。
-
-検証:
-- `./ci.sh` 実行結果: green
+- `docs/constitution/10_core_fact_spec.md:115` の OPEN Index を更新し、未決対象（OPEN-001,003,004,005,006,007,008,010,011,012,013）を明示しました。  
+- `docs/constitution/10_core_fact_spec.md:122` 以降の追跡先を、`docs/constitution/15_behavior_spec.md` と `docs/constitution/80_risks.md` に統一しました（新規仕様の確定はしていません）。
+- `docs/constitution/15_behavior_spec.md:401` の残OPEN一覧・索引注記・関連ドキュメント参照も同様に統一しました。
+- `docs/constitution/80_risks.md:1` の見出し表記を実ファイルパスに合わせました。  
+  （補足: リポジトリ上に `docs/risks.md` は無いため、現行の実体である `docs/constitution/80_risks.md` に揃えています）
+- 実行ログを `artifacts/runs/TASK-0101-agent1-spec.out.md:1` に出力し、`./ci.sh` は green を確認済みです。

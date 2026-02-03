@@ -9,6 +9,8 @@
 - TST-0004: **送達キュー（Outbox）のクラッシュ復旧** — enqueue が成功を返した通知は、プロセス強制終了後の再起動でキューに残っていること（IF-NOTIFIED-001 の観測可能な受け入れ条件）
 - TST-0005: `docs/constitution/contracts/trace.schema.json` の `required` に `traceId` / `deviceId` / `capturedAt` / `kind` が含まれることを観測できる
   - 観測手順（例）: `python3 -c "import json,sys; req=set(json.load(open('docs/constitution/contracts/trace.schema.json'))['required']); need={'traceId','deviceId','capturedAt','kind'}; print('required=',sorted(req)); sys.exit(0 if need<=req else 1)"`
+- TST-0006: `docs/constitution/contracts/trace.schema.json` が未知フィールドを拒否する（`additionalProperties: false`）ことを観測できる
+  - 観測手順（例）: `python3 -c "import json,sys; s=json.load(open('docs/constitution/contracts/trace.schema.json')); print('additionalProperties=',s.get('additionalProperties')); sys.exit(0 if s.get('additionalProperties') is False else 1)"`
 
 ## Non-negotiable rules
 - “通すために弱める変更”は禁止
