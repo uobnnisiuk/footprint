@@ -12,7 +12,7 @@ spike や本実装に着手する前に、OPEN をフェーズ別に整理し、
 
 | OPEN | テーマ | 理由 |
 |------|--------|------|
-| OPEN-006 | relay と reveal の境界定義 | envelope に何を含め、何を暗号化するかに直結 |
+| ~~OPEN-006~~ | ~~relay と reveal の境界定義~~ | **解決済み** → DEC-0003（公開ヘッダ + sealed payload に分離） |
 | OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | L1 の鍵管理設計の前提 |
 | OPEN-011 | 通知内容の最小セット | envelope に同梱する通知情報の範囲に影響 |
 
@@ -42,7 +42,7 @@ spike や本実装に着手する前に、OPEN をフェーズ別に整理し、
 
 - **問い**: L0 の canonical event を L1 envelope に包み、展開して元に戻るか？フォーマット上の問題はないか？
 - **不確実性の種類**: データフォーマットの往復
-- **前提OPEN**: OPEN-006（relay/reveal 境界）を仮定で置く必要あり
+- **前提OPEN**: ~~OPEN-006（relay/reveal 境界）~~ → DEC-0003 で解決済み（公開ヘッダ + sealed payload）
 - **検証手段**:
   1. L0 event 数件を canonical JSON で生成
   2. envelope 構造（events + metadata）に包む
@@ -50,7 +50,7 @@ spike や本実装に着手する前に、OPEN をフェーズ別に整理し、
   4. 不正な envelope（フィールド欠損、順序違い）で検証失敗を確認
 - **成功判定**: round-trip で canonical bytes が一致。不正入力で検証失敗
 - **mainに残すもの**: `envelope.schema.json` の骨格、正規化ルールの DEC
-- **依存**: OPEN-006 を IF で仮置きして着手可能
+- **依存**: ~~OPEN-006~~ → DEC-0003 で解決済み。着手可能
 - **優先度**: **高** — L1 本実装のクリティカルパス上
 
 ### SPIKE-0002: hash chain + 署名の構築・検証

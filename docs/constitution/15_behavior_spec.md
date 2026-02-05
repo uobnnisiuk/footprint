@@ -24,6 +24,17 @@
 
 **ポイント**: "拾える/運べる"と"読める"を分離する。
 
+#### relay / reveal の境界定義（DEC-0003: IF-BOUNDARY-001）
+
+境界は **sealed payload の復号の有無** で定義する。
+
+- **relay（通知なし）**
+  - できること: 受領・保存・再送・重複排除（envelope_id）・チャンク/圧縮（復号なしのまま）・署名の形式検査（任意）
+  - 禁止: sealed payload の復号、payload_events（Core Event）の読み取り/解析、そこから導ける位置/時刻/同一性の推定
+- **reveal（必ず通知が成立できることが前提）**
+  - sealed payload を復号する/平文を見る/平文由来の情報を表示・検索に使う行為はすべて reveal
+  - IF-REVEAL-001（サイレント不可）および IF-NOTIFIED-001（送達キュー永続登録）の制約に乗る
+
 ### 1.2 "寄り分け"は「除外」ではなく「整理」
 
 - 自動処理は原則として **順位付け・集約・畳み込みまで**。
@@ -370,8 +381,8 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 
 - すれ違い＝自動で遭遇記録を"中継"するだけ（第三者は読めない）
 - 通行人の端末は「**暗号化された遭遇カプセル**」を生成・保存・転送する
-- **通行人はカプセルを復号できない**（読めない）
-- 救助側/権限者だけが復号し、最終確認点として使える
+- **通行人はカプセルを復号できない**（読めない）— これが relay の範囲（IF-BOUNDARY-001）
+- 救助側/権限者だけが復号し、最終確認点として使える — 復号した瞬間が reveal
 
 ### 5.2 被災者側の発信
 
@@ -395,6 +406,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | IF-SEARCH-001 | オープン探索→「存在のみ」／対象キー探索→「同一性・特定あり得る」 |
 | IF-REVEAL-001 | reveal はサイレントに不可能。閲覧した瞬間に相手へ通知が送達される |
 | IF-RELAY-001 | サイレント遭遇中継。すれ違い＝自動で中継、第三者は読めない |
+| IF-BOUNDARY-001 | relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003） |
 
 ---
 
@@ -406,7 +418,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/constitution/80_risks.md` OPEN-003 |
 | OPEN-004 | 確度（スコア）の表示上の意味 | `docs/constitution/80_risks.md` OPEN-004 |
 | OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/constitution/80_risks.md` OPEN-005 |
-| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | 本文 Sections 3-5（関連仕様）, `docs/constitution/80_risks.md` OPEN-006 |
+| ~~OPEN-006~~ | ~~relay と reveal の境界定義（どこまでが relay か）~~ | → DEC-0003 で解決。本文 Section 1.1 に境界定義を追記 |
 | OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-007 |
 | OPEN-008 | サイレント遭遇中継のスパム対策 | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-008 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義 | 本文 Section 2, `docs/constitution/80_risks.md` OPEN-010 |
@@ -414,6 +426,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | 本文 Section 2.1, `docs/constitution/80_risks.md` OPEN-012 |
 | OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響 | `docs/constitution/80_risks.md` OPEN-013 |
 
+※OPEN-006（relay/reveal 境界）は DEC-0003 で解決済み（Section 1.1 に境界定義を追記）。
 ※OPEN-009（link の条件）は Section 2.1 で解決済み。
 ※全OPEN一覧の索引は `docs/constitution/10_core_fact_spec.md` の OPEN Index と `docs/constitution/80_risks.md` を参照。
 
