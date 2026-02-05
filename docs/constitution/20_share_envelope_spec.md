@@ -83,6 +83,23 @@ envelope.integrity に含める情報:
 - **IF-INTEG-003**: chain_tail を署名対象に含めることで、payload 全体の再シリアライズを回避する
 - **IF-BOUNDARY-001**: relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003）
 - **IF-CAPSULE-KEY-001**: 遭遇カプセルの暗号化鍵は Authorized Rescue の公開鍵とする（DEC-0004）
+- **IF-NOTIFY-CONTENT-001**: 通知ペイロードに痕跡内容・精密位置・追跡可能IDを含めない（DEC-0005）
+
+## Notification Reference（通知に同梱する参照情報）
+
+reveal / link が発生した際の通知ペイロードの最小セット（DEC-0005）。
+envelope に"通知に必要な参照情報だけ"を同梱する範囲を固定する。
+
+| フィールド | 内容 | 備考 |
+|-----------|------|------|
+| event_kind | REVEAL / LINK_START / LINK_EXTEND / LINK_STOP | 行為の種別 |
+| performed_at | 行為の発生時刻 | |
+| actor_class | Trusted / AuthorizedRescue / Auditor | 分類のみ（実名/所属は入れない） |
+| accountability_token | 監査用トークン（非公開） | 責任追跡 |
+| scope_summary | Time Window + Coarse Location Cell | 粗いスコープ（点座標不可） |
+| case_ref | case_id（任意だが強く推奨） | T2/T3 受付起票がある場合 |
+
+**禁止**: 精密位置・連続追跡可能なID・閲覧した痕跡の要約を通知に含めない。
 
 ## Outbox
 Outbox stores envelopes pending delivery.

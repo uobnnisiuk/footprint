@@ -147,7 +147,7 @@
 | ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか（救助機関鍵/地域鍵/家族鍵）~~ | C-008 | **解決済み** → DEC-0004 |
 | OPEN-008 | サイレント遭遇中継のスパム対策（PoW/署名/レート制限） | C-008 | 未解決 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | C-006 | 未解決 |
-| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | C-006 | 未解決 |
+| ~~OPEN-011~~ | ~~通知内容の最小セット（抑止に十分・悪用に不足）~~ | C-006 | **解決済み** → DEC-0005 |
 | OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | C-004, C-008 | 未解決 |
 | OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響（プライバシー臨界点との関係） | RFC-0001, RISK-PRIV-001 | 未解決 |
 
@@ -161,6 +161,7 @@
 | OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | DEC-0003 → `15_behavior_spec.md` Section 1.1, `20_share_envelope_spec.md` Envelope 構造 |
 | OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | DEC-0004 → `15_behavior_spec.md` Section 5.1, `20_share_envelope_spec.md` sealed payload |
 | OPEN-009 | link（同一人物追跡）の「条件付き」の条件（信頼者・権限救助者それぞれ） | `15_behavior_spec.md` Section 2.1 |
+| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | DEC-0005 → `15_behavior_spec.md` Section 3.4, `20_share_envelope_spec.md` Notification Reference |
 
 ---
 
