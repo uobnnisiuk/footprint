@@ -5,15 +5,27 @@ Create transferable, tamper-evident copies of Core facts (L1).
 Transport is adapter-only; Share Engine does not depend on BLE/HTTP/etc.
 
 ## Envelope
-### Required
+
+Envelope は **公開ヘッダ**（relay が触ってよい）と **sealed payload**（復号しないと読めない）の二層で構成する（DEC-0003: IF-BOUNDARY-001）。
+
+### 公開ヘッダ（relay 可）
 - envelope_id
 - created_at
 - source_id: privacy-safe identifier (policy decided elsewhere)
-- payload_events: [Core Event]
 - integrity: (詳細は下記 Integrity セクション参照)
 
+### sealed payload（relay 不可 — 復号 = reveal）
+- sealed_payload: 暗号化コンテナ（内部に payload_events: [Core Event] を含む）
+- recipient_key_id: 暗号化に使用した Authorized Rescue 公開鍵の識別子（公開ヘッダ側に配置 — relay が鍵の宛先を確認可能）
+- 暗号化鍵: Authorized Rescue の公開鍵（IF-CAPSULE-KEY-001 / DEC-0004）。通行人は復号不可
+
 ### Optional
-- chunking/compression metadata
+- chunking/compression metadata（公開ヘッダ側。復号なしで処理できるようにする）
+
+### 設計根拠（DEC-0003）
+- relay は公開ヘッダだけで受領・保存・再送・重複排除（envelope_id）・チャンク/圧縮が可能
+- relay は sealed_payload を復号できない（読めない）
+- sealed_payload を復号した瞬間が reveal（IF-REVEAL-001 の通知制約に乗る）
 
 ## Integrity（改ざん検出・真正性）
 
@@ -21,6 +33,8 @@ L1 は hash chain + signature の両方を必須とする（IF-INTEG-002）。
 根拠: RFC-0002 / 15_behavior_spec.md / IDEA-0003 の設計方針と整合。
 
 ### hash chain アルゴリズム
+
+hash chain は **暗号化前の平文 payload_events** に対して構築する。受領者は sealed_payload を復号した後に検証する（DEC-0003）。
 
 ```
 e[i] = canonical(payload_events[i])   # L0 が定義した正規化
@@ -67,6 +81,25 @@ envelope.integrity に含める情報:
 
 - **IF-INTEG-002**: L1 は hash chain + signature の両方を必須とする
 - **IF-INTEG-003**: chain_tail を署名対象に含めることで、payload 全体の再シリアライズを回避する
+- **IF-BOUNDARY-001**: relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003）
+- **IF-CAPSULE-KEY-001**: 遭遇カプセルの暗号化鍵は Authorized Rescue の公開鍵とする（DEC-0004）
+- **IF-NOTIFY-CONTENT-001**: 通知ペイロードに痕跡内容・精密位置・追跡可能IDを含めない（DEC-0005）
+
+## Notification Reference（通知に同梱する参照情報）
+
+reveal / link が発生した際の通知ペイロードの最小セット（DEC-0005）。
+envelope に"通知に必要な参照情報だけ"を同梱する範囲を固定する。
+
+| フィールド | 内容 | 備考 |
+|-----------|------|------|
+| event_kind | REVEAL / LINK_START / LINK_EXTEND / LINK_STOP | 行為の種別 |
+| performed_at | 行為の発生時刻 | |
+| actor_class | Trusted / AuthorizedRescue / Auditor | 分類のみ（実名/所属は入れない） |
+| accountability_token | 監査用トークン（非公開） | 責任追跡 |
+| scope_summary | Time Window + Coarse Location Cell | 粗いスコープ（点座標不可） |
+| case_ref | case_id（任意だが強く推奨） | T2/T3 受付起票がある場合 |
+
+**禁止**: 精密位置・連続追跡可能なID・閲覧した痕跡の要約を通知に含めない。
 
 ## Outbox
 Outbox stores envelopes pending delivery.
