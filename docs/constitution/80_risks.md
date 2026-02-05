@@ -60,6 +60,7 @@
 * **解決案（方向性）**: オープン探索の価値を **疎で最大化**し、密では **縮退**する
   * 同じ機能を一律にせず、環境（密/疎）でUI/提示を変える（ただしロスレス経路は不変）
   * **IF-RELAY-001**: 疎ではサイレント遭遇中継を活用（すれ違いだけで最終位置が残る）
+    * 注: Find My / Find Hub 互換タグは (A)位置relay を強化するが、(B)痕跡データrelay（遭遇カプセルの store-carry-forward）そのものにはなれない
 * **前提**: IF-LOSSLESS-001, IF-RELAY-001
 * **OPEN**: 密/疎の判定をどう扱うか（自動/手動/状況タグ）
 
@@ -192,7 +193,7 @@
 | OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | C-005 | 未解決 |
 | OPEN-004 | 確度（スコア）の表示上の意味 | C-007 | 未解決 |
 | OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | C-006 | 未解決 |
-| ~~OPEN-006~~ | ~~relay と reveal の境界定義（どこまでが relay か）~~ | C-006 | **解決済み** → DEC-0003 |
+| ~~OPEN-006~~ | ~~relay(B:痕跡データrelay) と reveal の境界定義（どこまでが relay(B) か）~~ | C-006 | **解決済み** → DEC-0003 |
 | ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか（救助機関鍵/地域鍵/家族鍵）~~ | C-008 | **解決済み** → DEC-0004 |
 | OPEN-008 | サイレント遭遇中継のスパム対策（PoW/署名/レート制限） | C-008 | 未解決 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | C-006 | 未解決 |
@@ -207,7 +208,7 @@
 | ID | 内容 | 解決先 |
 |----|------|--------|
 | OPEN-002 | 「存在」から「特定」への昇格パス（誰が/どの権限で/どの手続きで） | `15_behavior_spec.md` Section 2.1 (T2詳細仕様) |
-| OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | DEC-0003 → `15_behavior_spec.md` Section 1.1, `20_share_envelope_spec.md` Envelope 構造 |
+| OPEN-006 | relay(B:痕跡データrelay) と reveal の境界定義（どこまでが relay(B) か） | DEC-0003 → `15_behavior_spec.md` Section 1.1, `20_share_envelope_spec.md` Envelope 構造 |
 | OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | DEC-0004 → `15_behavior_spec.md` Section 5.1, `20_share_envelope_spec.md` sealed payload |
 | OPEN-009 | link（同一人物追跡）の「条件付き」の条件（信頼者・権限救助者それぞれ） | `15_behavior_spec.md` Section 2.1 |
 | OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | DEC-0005（`docs/rfc/DEC-0005-notification-minimal-set.md`）→ `15_behavior_spec.md` Section 3.4, `20_share_envelope_spec.md` Notification Reference |
@@ -223,7 +224,9 @@
    * オープン探索 → 「存在のみ」
    * 対象キー探索 → 「同一性・特定あり得る」
 5. **詳細閲覧はサイレントに不可能**（IF-REVEAL-001, IF-NOTIFIED-001）:
-   * relay（中継）＝誰でもできる（通知不要）
+   * 用語分離: relay は (A)位置relay と (B)痕跡データrelay を区別する（以後、relay/reveal 境界の「relay」は(B)を指す）
+   * (A)位置relay: OS組み込みネットワーク（例: Find My/Find Hub）で「タグ/端末の位置」が更新・共有される類。footprint の遭遇カプセル転送ではない
+   * relay(B:痕跡データrelay)（中継）＝誰でもできる（通知不要）
    * reveal（詳細）＝閲覧した瞬間に相手へ通知が送達される（オンライン即時／オフライン遅延）
    * 抑止の芯は「ログが残る」ではなく「相手に伝わる」
    * 通知の送達保証は「送達キューへの永続登録（クラッシュ復旧可能）」で担保（IF-NOTIFIED-001）
