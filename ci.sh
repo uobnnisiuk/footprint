@@ -38,15 +38,23 @@ require_file() {
 
 always_on_checks() {
   echo "[ci] phase: always_on"
-  require_file AGENTS.md "restore AGENTS.md (operation SSOT)"
-  require_file docs/constitution/00_constitution.md "restore constitution SSOT docs"
-  require_file docs/constitution/10_core_fact_spec.md "restore core fact SSOT docs"
-  require_file docs/constitution/20_share_envelope_spec.md "restore share envelope SSOT docs"
-  require_file docs/constitution/30_testplan.md "create or restore Acceptance/TST SSOT"
-  require_file docs/rfc/RFC-0000-template.md "restore RFC template SSOT"
-  require_file artifacts/inbox/tasks/TASK-0000-template.md "restore task template"
-  require_file artifacts/packs/CP-0000-template.md "restore context-pack template"
-  require_file docs/constitution/contracts/trace.schema.json "create or restore trace contract schema"
+  local required_files=(
+    "AGENTS.md|restore AGENTS.md (operation SSOT)"
+    "docs/constitution/00_constitution.md|restore constitution SSOT docs"
+    "docs/constitution/10_core_fact_spec.md|restore core fact SSOT docs"
+    "docs/constitution/20_share_envelope_spec.md|restore share envelope SSOT docs"
+    "docs/constitution/30_testplan.md|create or restore Acceptance/TST SSOT"
+    "docs/rfc/RFC-0000-template.md|restore RFC template SSOT"
+    "artifacts/inbox/tasks/TASK-0000-template.md|restore task template"
+    "artifacts/packs/CP-0000-template.md|restore context-pack template"
+    "docs/constitution/contracts/trace.schema.json|create or restore trace contract schema"
+  )
+  local entry path hint
+  for entry in "${required_files[@]}"; do
+    path="${entry%%|*}"
+    hint="${entry#*|}"
+    require_file "$path" "$hint"
+  done
 
   if command -v python3 >/dev/null 2>&1; then
     run python3 -m json.tool docs/constitution/contracts/trace.schema.json >/dev/null
@@ -90,7 +98,7 @@ run_backend_tests_if_present() {
     return 0
   fi
 
-  fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "install pnpm, npm, or yarn so backend tests can run"
+  fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "install pnpm (recommended), npm, or yarn, then rerun ./ci.sh"
 }
 
 optional_checks() {

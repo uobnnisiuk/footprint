@@ -17,6 +17,8 @@
   - 観測手順（例）: `python3 -c "import json,sys; p=json.load(open('docs/constitution/contracts/trace.schema.json'))['properties']['capturedAt']; ok=(p.get('type')=='string' and p.get('format')=='date-time'); print('capturedAt=',p); sys.exit(0 if ok else 1)"`
 - TST-0009: `docs/constitution/contracts/trace.schema.json` の `payload` が任意（`required` に含まれない）かつ `type=object` であることを観測できる
   - 観測手順（例）: `python3 -c "import json,sys; s=json.load(open('docs/constitution/contracts/trace.schema.json')); req=set(s.get('required',[])); p=s['properties'].get('payload',{}); ok=('payload' not in req and p.get('type')=='object'); print('payload=',p,'required_contains_payload=',('payload' in req)); sys.exit(0 if ok else 1)"`
+- TST-0010: `docs/constitution/contracts/trace.schema.json` の `traceId` と `deviceId` が空文字を許容しない（`minLength=1`）ことを観測できる
+  - 観測手順（例）: `python3 -c "import json,sys; p=json.load(open('docs/constitution/contracts/trace.schema.json'))['properties']; ok=(p.get('traceId',{}).get('minLength')==1 and p.get('deviceId',{}).get('minLength')==1); print('traceId.minLength=',p.get('traceId',{}).get('minLength'),'deviceId.minLength=',p.get('deviceId',{}).get('minLength')); sys.exit(0 if ok else 1)"`
 
 ## Non-negotiable rules
 - “通すために弱める変更”は禁止
