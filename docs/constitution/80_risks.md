@@ -144,7 +144,7 @@
 | OPEN-004 | 確度（スコア）の表示上の意味 | C-007 | 未解決 |
 | OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | C-006 | 未解決 |
 | ~~OPEN-006~~ | ~~relay と reveal の境界定義（どこまでが relay か）~~ | C-006 | **解決済み** → DEC-0003 |
-| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか（救助機関鍵/地域鍵/家族鍵） | C-008 | 未解決 |
+| ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか（救助機関鍵/地域鍵/家族鍵）~~ | C-008 | **解決済み** → DEC-0004 |
 | OPEN-008 | サイレント遭遇中継のスパム対策（PoW/署名/レート制限） | C-008 | 未解決 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | C-006 | 未解決 |
 | OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | C-006 | 未解決 |
@@ -159,6 +159,7 @@
 |----|------|--------|
 | OPEN-002 | 「存在」から「特定」への昇格パス（誰が/どの権限で/どの手続きで） | `15_behavior_spec.md` Section 2.1 (T2詳細仕様) |
 | OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | DEC-0003 → `15_behavior_spec.md` Section 1.1, `20_share_envelope_spec.md` Envelope 構造 |
+| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | DEC-0004 → `15_behavior_spec.md` Section 5.1, `20_share_envelope_spec.md` sealed payload |
 | OPEN-009 | link（同一人物追跡）の「条件付き」の条件（信頼者・権限救助者それぞれ） | `15_behavior_spec.md` Section 2.1 |
 
 ---

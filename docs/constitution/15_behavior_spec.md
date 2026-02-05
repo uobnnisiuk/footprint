@@ -381,6 +381,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 
 - すれ違い＝自動で遭遇記録を"中継"するだけ（第三者は読めない）
 - 通行人の端末は「**暗号化された遭遇カプセル**」を生成・保存・転送する
+- カプセルは **Authorized Rescue の公開鍵** で暗号化する（IF-CAPSULE-KEY-001 / DEC-0004）
 - **通行人はカプセルを復号できない**（読めない）— これが relay の範囲（IF-BOUNDARY-001）
 - 救助側/権限者だけが復号し、最終確認点として使える — 復号した瞬間が reveal
 
@@ -391,7 +392,6 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 
 ### 未決定（OPEN）
 
-- **OPEN-007**: 遭遇カプセルの暗号化鍵は誰が持つか（救助機関鍵/地域鍵/家族鍵）
 - **OPEN-008**: サイレント遭遇中継のスパム対策（PoW/署名/レート制限）
 
 ---
@@ -407,6 +407,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | IF-REVEAL-001 | reveal はサイレントに不可能。閲覧した瞬間に相手へ通知が送達される |
 | IF-RELAY-001 | サイレント遭遇中継。すれ違い＝自動で中継、第三者は読めない |
 | IF-BOUNDARY-001 | relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003） |
+| IF-CAPSULE-KEY-001 | 遭遇カプセルの暗号化鍵は Authorized Rescue の公開鍵とする。通行人は復号できない（DEC-0004） |
 
 ---
 
@@ -419,7 +420,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | OPEN-004 | 確度（スコア）の表示上の意味 | `docs/constitution/80_risks.md` OPEN-004 |
 | OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/constitution/80_risks.md` OPEN-005 |
 | ~~OPEN-006~~ | ~~relay と reveal の境界定義（どこまでが relay か）~~ | → DEC-0003 で解決。本文 Section 1.1 に境界定義を追記 |
-| OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-007 |
+| ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか~~ | → DEC-0004 で解決。本文 Section 5.1 に暗号化鍵を追記 |
 | OPEN-008 | サイレント遭遇中継のスパム対策 | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-008 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義 | 本文 Section 2, `docs/constitution/80_risks.md` OPEN-010 |
 | OPEN-011 | 通知内容の最小セット | 本文 Section 3, `docs/constitution/80_risks.md` OPEN-011 |
@@ -427,6 +428,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響 | `docs/constitution/80_risks.md` OPEN-013 |
 
 ※OPEN-006（relay/reveal 境界）は DEC-0003 で解決済み（Section 1.1 に境界定義を追記）。
+※OPEN-007（暗号化鍵）は DEC-0004 で解決済み（Section 5.1 に Authorized Rescue 公開鍵を追記）。
 ※OPEN-009（link の条件）は Section 2.1 で解決済み。
 ※全OPEN一覧の索引は `docs/constitution/10_core_fact_spec.md` の OPEN Index と `docs/constitution/80_risks.md` を参照。
 

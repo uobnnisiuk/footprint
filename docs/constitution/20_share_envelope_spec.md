@@ -16,7 +16,8 @@ Envelope は **公開ヘッダ**（relay が触ってよい）と **sealed paylo
 
 ### sealed payload（relay 不可 — 復号 = reveal）
 - sealed_payload: 暗号化コンテナ（内部に payload_events: [Core Event] を含む）
-- 暗号化方式・鍵管理は OPEN-007 で決定予定
+- recipient_key_id: 暗号化に使用した Authorized Rescue 公開鍵の識別子（公開ヘッダ側に配置 — relay が鍵の宛先を確認可能）
+- 暗号化鍵: Authorized Rescue の公開鍵（IF-CAPSULE-KEY-001 / DEC-0004）。通行人は復号不可
 
 ### Optional
 - chunking/compression metadata（公開ヘッダ側。復号なしで処理できるようにする）
@@ -81,6 +82,7 @@ envelope.integrity に含める情報:
 - **IF-INTEG-002**: L1 は hash chain + signature の両方を必須とする
 - **IF-INTEG-003**: chain_tail を署名対象に含めることで、payload 全体の再シリアライズを回避する
 - **IF-BOUNDARY-001**: relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003）
+- **IF-CAPSULE-KEY-001**: 遭遇カプセルの暗号化鍵は Authorized Rescue の公開鍵とする（DEC-0004）
 
 ## Outbox
 Outbox stores envelopes pending delivery.
