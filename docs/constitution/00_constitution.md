@@ -9,6 +9,8 @@ No guessing. No claiming. Just facts + blank.
 Reduce early decision mistakes in rescue by providing:
 - Last Known Good (time-first)
 - Blank (what we do NOT know after that)
+- Minimum External Evidence（MEE）は「外部で観測できる最小の手がかり」（例: OS組み込みの"アイテム発見"による位置1点）でよい。  
+- footprint の差別点は「位置そのもの」ではなく、救助判断に効く **Rescue Evidence Package**（Last Known Good + explicit Blank + 観測された状態）を改ざん耐性と共有境界（relay/reveal）付きで渡せること。
 
 ## Non-goals (Hard)
 - No current location claiming
