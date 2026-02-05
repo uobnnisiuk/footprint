@@ -83,7 +83,7 @@
     * オンラインなら即時、オフラインなら遅延送達（通知は必ず生成され、送達キューに残る）
     * relay（中継）＝誰でもできる（通知不要）
     * reveal（詳細）＝必ず通知が出る（敵対の"こっそり不在確認"を潰す）
-    * 通知内容は最小（いつ／どの候補を／責任トークン）。閲覧者の個人情報は含まない
+    * 通知内容は DEC-0005 の最小4点（`occurred_at` / `action_kind` / `target_ref` / `accountability_token`）に固定し、PII・痕跡内容・精密位置・自由記述を含めない
 * **前提**: IF-SEARCH-001, IF-REVEAL-001, IF-NOTIFIED-001
 * **残存リスク**:
   * 「存在のみ」でも、時空間粒度が細かすぎると推定可能になる（→ RISK-PRIV-001）
@@ -147,7 +147,7 @@
 | ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか（救助機関鍵/地域鍵/家族鍵）~~ | C-008 | **解決済み** → DEC-0004 |
 | OPEN-008 | サイレント遭遇中継のスパム対策（PoW/署名/レート制限） | C-008 | 未解決 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | C-006 | 未解決 |
-| ~~OPEN-011~~ | ~~通知内容の最小セット（抑止に十分・悪用に不足）~~ | C-006 | **解決済み** → DEC-0005 |
+| ~~OPEN-011~~ | ~~通知内容の最小セット（抑止に十分・悪用に不足）~~ | C-006 | **解決済み** → DEC-0005（通知最小4点 + 禁止事項） |
 | OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | C-004, C-008 | 未解決 |
 | OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響（プライバシー臨界点との関係） | RFC-0001, RISK-PRIV-001 | 未解決 |
 
@@ -161,7 +161,7 @@
 | OPEN-006 | relay と reveal の境界定義（どこまでが relay か） | DEC-0003 → `15_behavior_spec.md` Section 1.1, `20_share_envelope_spec.md` Envelope 構造 |
 | OPEN-007 | 遭遇カプセルの暗号化鍵は誰が持つか | DEC-0004 → `15_behavior_spec.md` Section 5.1, `20_share_envelope_spec.md` sealed payload |
 | OPEN-009 | link（同一人物追跡）の「条件付き」の条件（信頼者・権限救助者それぞれ） | `15_behavior_spec.md` Section 2.1 |
-| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | DEC-0005 → `15_behavior_spec.md` Section 3.4, `20_share_envelope_spec.md` Notification Reference |
+| OPEN-011 | 通知内容の最小セット（抑止に十分・悪用に不足） | DEC-0005（`docs/rfc/DEC-0005-notification-minimal-set.md`）→ `15_behavior_spec.md` Section 3.4, `20_share_envelope_spec.md` Notification Reference |
 
 ---
 

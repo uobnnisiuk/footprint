@@ -1,11 +1,13 @@
-`./ci.sh` を最小Diffで育成し、失敗時HINTを1箇所だけ具体化しました。
+`./ci.sh` を単一入口のまま最小Diffで育成し、可読性と失敗時復旧の具体性を少し上げました。
 
-- 変更: backend の package manager 未導入時HINTを具体化（`ci.sh:101`）
-- 方針維持: `always_on / optional / guard` 構造、no-op green禁止、実装がある場合のテスト非スキップ方針は維持
-- 実行ログ更新: `artifacts/runs/TASK-0200-agent4-ci.out.md`
+- 重複していた `cd <dir> && ...` 実行を `run_in_dir` に集約し、`optional` フェーズの読みやすさを改善しました（`ci.sh:30`, `ci.sh:101`, `ci.sh:106`, `ci.sh:133`）。
+- 失敗時HINTは1箇所だけ具体化し、Rust未導入時に「`cargo --version` が通る状態」を明示しました（`ci.sh:84`）。
+- `always_on / optional / guard` の責務分離、`no-op green` 禁止、実装存在時の非スキップ方針は維持しています（`ci.sh:48`, `ci.sh:113`, `ci.sh:137`）。
+- 実行ログを更新しました（`artifacts/runs/TASK-0200-agent4-ci.out.md:1`）。
 
-検証結果:
-- `bash -n ci.sh` OK
-- `./ci.sh` green（TST-0200-1/2/3 を満たす）
+検証:
+- `bash -n ci.sh` ✅
+- `./ci.sh` ✅ green（coreテスト実行含む、TST-0200-1/2/3充足）
 
-必要なら次に `git add ci.sh artifacts/runs/TASK-0200-agent4-ci.out.md && git commit` で確定できます。
+次に進めるなら:
+1. `git add ci.sh artifacts/runs/TASK-0200-agent4-ci.out.md && git commit`

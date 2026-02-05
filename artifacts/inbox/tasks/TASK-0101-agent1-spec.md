@@ -1,51 +1,53 @@
-# TASK-0101: agent1 — P-L1 OPEN-007 を DEC で確定（遭遇カプセル鍵）
+# TASK-0101: agent1 — P-L1 OPEN-011 を DEC で確定（通知内容の最小セット）
 
 ## 目的（SR）
-P-L1 の未決 OPEN のうち **OPEN-007（遭遇カプセルの暗号化鍵は誰が持つか）**を、mini RFC + DEC で確定し、SSOT の OPEN index / 参照整合まで最小Diffで反映する。
+P-L1 の未決 OPEN のうち **OPEN-011（通知内容の最小セット）**を、mini RFC + DEC で確定し、SSOT（OPEN index / risks / behavior）へ最小Diffで反映する。
 
 ## SR（結論を先に固定）
-- **SR**: 遭遇カプセルは **救助機関鍵（Authorized Rescue key）**で暗号化する
-- 却下（短く）:
-  - 地域鍵: 配布/ローテ/漏洩時影響が地域境界に依存し運用が破綻しやすい
-  - 家族鍵: 家族不在・連絡不能で救助が詰まる（孤立者救助の主ルートを壊す）
+**SR**: 通知（Notified）の本文に含める最小セットは以下の4点のみとする（“抑止に十分・悪用に不足”）。
+
+### Notification Minimal Set（固定）
+- **occurred_at**: 発生時刻（UTC, ms, ISO8601 Z）
+- **action_kind**: `REVEAL` / `LINK`（詳細分類は後続だが最低2値は固定）
+- **target_ref**: 「どの対象か」を示す **不透明ID**（例: case_id / candidate_id / subject_ref のいずれか。型は `target_ref` で統一）
+- **accountability_token**: 後で監査で追える責任トークン（公開されない不透明トークン）
+
+### 明示的に禁止（固定）
+- 閲覧者/実行者の **個人情報（氏名・電話・メール・住所・アカウントID・端末ID・IP等）**を含めない
+- 痕跡の **内容（payload/location/state 等）** を含めない
+- **精密位置**や **自由記述**を含めない（悪用・炎上リスク）
 
 ## 前提（不変条件）
-- IF-001: 仕様SSOTは `docs/constitution/` と `docs/rfc/`
-- IF-002: OPEN-010（Authorized Rescue の定義）は **未決のまま維持**する（本タスクで確定しない）
-- IF-003: 新規の実装要求は増やさない（仕様と参照整合のみ）
-- IF-004: “通すために弱める変更”は禁止（CIやAcceptanceを弱めない）
+- IF-001: SSOT は `docs/constitution/*` と `docs/rfc/*`
+- IF-NOTIFIED-001: Notified は「送達キューへの永続登録（クラッシュ復旧）」で成立（DEC-0002/RFC-0002 は変更しない）
+- “通すために弱める変更”は禁止（既存TSTの弱体化禁止）
+- OPEN-010（Authorized Rescue 定義）は未決のまま維持（本タスクで確定しない）
 
 ## 変更範囲（Diff最小）
-- 主対象:
-  - `docs/rfc/DEC-0004-encounter-capsule-key.md`（存在すれば更新、無ければ新規作成）
-  - `docs/constitution/10_core_fact_spec.md`（OPEN index を更新）
-- 参照整合が必要な場合のみ:
-  - `docs/constitution/80_risks.md`（OPEN-007 の状態と参照更新）
-  - `docs/constitution/15_behavior_spec.md`（参照ズレのみ最小修正）
+- `docs/rfc/RFC-0005-notification-minimal-set.md`（新規）
+- `docs/rfc/DEC-0005-notification-minimal-set.md`（新規）
+- `docs/constitution/15_behavior_spec.md`（OPEN-011 を解決済みにし、DEC参照を追加：最小）
+- `docs/constitution/10_core_fact_spec.md`（OPEN index から OPEN-011 を解決済みに移し、DEC参照を追加）
+- `docs/constitution/80_risks.md`（OPEN-011 を解決済みにし、C-006 の通知最小セットを DEC 参照へ）
+- 実施ログ: `artifacts/runs/TASK-0101-agent1-spec.out.md`
 
 ## 実施内容（順序固定）
-1) `spike-backlog.md` の P-L1（OPEN-006/007/011）と、`80_risks.md` の OPEN-007 を確認
-2) **mini RFC + DEC** を作る（最小）
-   - RFC: 1〜2ページで「なぜ救助機関鍵か」「却下理由」「OPEN-010 との境界」を書く
-   - DEC: SR を1行で固定し、仕様参照先（Behavior/Risk）を列挙
-   - RFC/DEC のファイル名は既存規約に合わせる（DEC-0004 があるならそれを更新）
-3) `10_core_fact_spec.md` の OPEN index で **OPEN-007 を解決済み**にし、参照先を DEC に固定
-   - 他のOPENは “未決のまま” を維持
-4) `80_risks.md` の OPEN 表で OPEN-007 を解決済みにし、C-008 の「鍵運用」箇所の参照を DEC に向ける
-5) `./ci.sh` 実行で green を確認し、実施ログを `artifacts/runs/TASK-0101-agent1-spec.out.md` に残す
+1) 既存根拠を確認:
+   - `docs/constitution/80_risks.md` C-006 の「通知は最小（いつ／どの候補／責任トークン）」記述
+   - `docs/rfc/RFC-0002-notification-queue-persistence.md`（内容は非対象、永続性のみ）
+2) mini RFC を作る（1〜2ページ）
+   - なぜこの4点が「抑止に十分」で「悪用に不足」なのか
+   - 禁止事項（PII/内容/精密位置/自由記述）を明文化
+   - OPEN-010 との境界（権限救助者の定義は別件）
+3) DEC を作る（SRを1行で固定）
+   - “通知最小セット4点” と “禁止事項” を必ず含む
+4) SSOT 反映（最小Diff）
+   - 15_behavior_spec / 10_core_fact_spec OPEN index / 80_risks を参照整合
+5) `./ci.sh` green を確認し、実施ログを runs に残す
 
-## 受け入れ条件（TST）
-- TST-0101-1: OPEN-007 が DEC により確定し、SSOTから参照できる
-- TST-0101-2: OPEN-010 は未決のまま維持される（境界が明記される）
-- TST-0101-3: `./ci.sh` が green
+## 受け入れ条件
+- OPEN-011 が DEC により確定し、SSOT から参照可能
+- 既存の Notified 永続性（DEC-0002）と矛盾しない
+- `./ci.sh` green
 
-## 実行コマンド（固定）
-`codex exec --profile agent1 --color never --output-last-message artifacts/runs/TASK-0101-agent1-spec.out.md - < artifacts/inbox/tasks/TASK-0101-agent1-spec.md`
-
-## 生成物
-- `artifacts/runs/TASK-0101-agent1-spec.out.md`
-- `docs/rfc/(RFC-xxxx ...).md`（最小）
-- `docs/rfc/DEC-0004-encounter-capsule-key.md`
-- `docs/constitution/10_core_fact_spec.md`（OPEN index 更新）
-- （必要なら）`docs/constitution/80_risks.md` 参照整合
 

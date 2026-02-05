@@ -27,6 +27,15 @@ run() {
   fi
 }
 
+run_in_dir() {
+  local dir="$1"
+  shift
+  (
+    cd "$dir"
+    "$@"
+  )
+}
+
 require_file() {
   local path="$1"
   local hint="$2"
@@ -72,7 +81,7 @@ run_rust_tests_if_present() {
   fi
 
   if ! command -v cargo >/dev/null 2>&1; then
-    fail_with_hint "${manifest} exists but cargo is unavailable (tests would be skipped)" "install Rust toolchain (cargo) so implementation tests can run"
+    fail_with_hint "${manifest} exists but cargo is unavailable (tests would be skipped)" "install Rust toolchain until 'cargo --version' works in PATH, then rerun ./ci.sh"
   fi
 
   run cargo test --manifest-path "$manifest"
@@ -89,12 +98,12 @@ run_backend_tests_if_present() {
   fi
 
   if command -v npm >/dev/null 2>&1; then
-    run bash -lc "cd backend && npm test"
+    run run_in_dir backend npm test
     return 0
   fi
 
   if command -v yarn >/dev/null 2>&1; then
-    run bash -lc "cd backend && yarn test"
+    run run_in_dir backend yarn test
     return 0
   fi
 
@@ -121,7 +130,7 @@ optional_checks() {
     if ! command -v java >/dev/null 2>&1; then
       fail_with_hint "android/gradlew exists but java is unavailable (tests would fail)" "install a JDK and rerun ./ci.sh"
     fi
-    run bash -lc "cd android && ./gradlew test"
+    run run_in_dir android ./gradlew test
   fi
 }
 

@@ -354,20 +354,23 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 - プラットフォームが不在（通信断・未整備）でも Notified は成立させる必要がある
 - "送達キュー"には **ローカル永続Outbox** を含め、オフラインでも「後で送るべき通知」として残ることを成立条件に含める。
 
-### 3.4 通知ペイロードの最小セット（DEC-0005: IF-NOTIFY-CONTENT-001）
+### 3.4 通知本文の最小セット（DEC-0005: IF-NOTIFY-CONTENT-001）
 
-通知に含めるのは「行為の事実 + 責任追跡 + 粗いスコープ」のみ。痕跡の内容・精密位置・連続追跡可能なIDは一切含めない。
+通知（Notified）本文に含める最小セットは、**「抑止に十分・悪用に不足」**を満たす次の4点に固定する。
 
 | # | フィールド | 内容 |
 |---|-----------|------|
-| 1 | **event_kind** | REVEAL / LINK_START / LINK_EXTEND / LINK_STOP |
-| 2 | **performed_at** | 行為が発生した時刻 |
-| 3 | **actor_class** | Trusted / AuthorizedRescue / Auditor（分類のみ。実名/所属は入れない） |
-| 4 | **accountability_token** | 後で監査・受付が追えるトークン（一般公開しない） |
-| 5 | **scope_summary** | Time Window + Coarse Location Cell（点座標ではなくセル） |
-| 6 | **case_ref** *(任意だが強く推奨)* | T2/T3 の受付起票が存在するなら case_id |
+| 1 | **occurred_at** | 発生時刻（UTC, ms, ISO8601 `Z`） |
+| 2 | **action_kind** | `REVEAL` / `LINK`（詳細分類は後続で拡張可） |
+| 3 | **target_ref** | 対象を示す不透明ID（`case_id` / `candidate_id` / `subject_ref` 等。型は `target_ref` で統一） |
+| 4 | **accountability_token** | 後で監査で追える責任トークン（公開しない） |
 
-**不変条件 IF-NOTIFY-CONTENT-001**: 通知ペイロードに痕跡の内容（位置の精密座標・連続追跡可能なID・閲覧内容の要約）を含めない。通知自体が新たな漏洩源にならないことを保証する。
+**明示的に禁止**:
+- 閲覧者/実行者の個人情報（氏名・電話・メール・住所・アカウントID・端末ID・IP 等）を含めない
+- 痕跡の内容（`payload` / `location` / `state` 等）を含めない
+- 精密位置や自由記述を含めない
+
+**不変条件 IF-NOTIFY-CONTENT-001**: 通知本文は `occurred_at` / `action_kind` / `target_ref` / `accountability_token` の4点のみを最小セットとして扱う。閲覧者/実行者の個人情報、痕跡内容、精密位置、自由記述を含めない。
 
 ---
 
@@ -419,7 +422,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | IF-RELAY-001 | サイレント遭遇中継。すれ違い＝自動で中継、第三者は読めない |
 | IF-BOUNDARY-001 | relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003） |
 | IF-CAPSULE-KEY-001 | 遭遇カプセルの暗号化鍵は Authorized Rescue の公開鍵とする。通行人は復号できない（DEC-0004） |
-| IF-NOTIFY-CONTENT-001 | 通知ペイロードに痕跡内容・精密位置・追跡可能IDを含めない。通知自体が漏洩源にならない（DEC-0005） |
+| IF-NOTIFY-CONTENT-001 | 通知本文は `occurred_at` / `action_kind` / `target_ref` / `accountability_token` の4点のみ。PII・痕跡内容・精密位置・自由記述を含めない（DEC-0005） |
 
 ---
 
@@ -435,14 +438,14 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 | ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか~~ | → DEC-0004 で解決。本文 Section 5.1 に暗号化鍵を追記 |
 | OPEN-008 | サイレント遭遇中継のスパム対策 | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-008 |
 | OPEN-010 | 権限救助者（Authorized Rescue）の定義 | 本文 Section 2, `docs/constitution/80_risks.md` OPEN-010 |
-| ~~OPEN-011~~ | ~~通知内容の最小セット~~ | → DEC-0005 で解決。本文 Section 3.4 に通知ペイロード最小セットを追記 |
+| ~~OPEN-011~~ | ~~通知内容の最小セット~~ | → DEC-0005 で解決。本文 Section 3.4 に通知本文の最小セットを追記 |
 | OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | 本文 Section 2.1, `docs/constitution/80_risks.md` OPEN-012 |
 | OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響 | `docs/constitution/80_risks.md` OPEN-013 |
 
 ※OPEN-006（relay/reveal 境界）は DEC-0003 で解決済み（Section 1.1 に境界定義を追記）。
 ※OPEN-007（暗号化鍵）は DEC-0004 で解決済み（Section 5.1 に Authorized Rescue 公開鍵を追記）。
 ※OPEN-009（link の条件）は Section 2.1 で解決済み。
-※OPEN-011（通知内容の最小セット）は DEC-0005 で解決済み（Section 3.4 に通知ペイロード最小セットを追記）。
+※OPEN-011（通知内容の最小セット）は DEC-0005 で解決済み（Section 3.4 に通知本文の最小セットを追記）。
 ※全OPEN一覧の索引は `docs/constitution/10_core_fact_spec.md` の OPEN Index と `docs/constitution/80_risks.md` を参照。
 
 ---

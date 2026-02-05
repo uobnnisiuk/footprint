@@ -21,6 +21,8 @@
   - 観測手順（例）: `python3 -c "import json,sys; p=json.load(open('docs/constitution/contracts/trace.schema.json'))['properties']; ok=(p.get('traceId',{}).get('minLength')==1 and p.get('deviceId',{}).get('minLength')==1); print('traceId.minLength=',p.get('traceId',{}).get('minLength'),'deviceId.minLength=',p.get('deviceId',{}).get('minLength')); sys.exit(0 if ok else 1)"`
 - TST-0011: `docs/rfc/DEC-0004-encounter-capsule-key.md` において、遭遇カプセル鍵の SR が救助機関鍵（Authorized Rescue 公開鍵）であることを観測できる
   - 観測手順（例）: `grep -nE "決定内容（SR）|救助機関|Authorized Rescue 公開鍵" docs/rfc/DEC-0004-encounter-capsule-key.md`
+- TST-0012: `docs/rfc/DEC-0005-notification-minimal-set.md` において、Notification Minimal Set として `occurred_at` / `action_kind` / `target_ref` / `accountability_token` が明記され、かつ禁止事項（閲覧者PII/内容/精密位置/自由記述を含めない）が明記されていることを観測できる
+  - 観測手順（例）: `grep -n "occurred_at\\|action_kind\\|target_ref\\|accountability_token" docs/rfc/DEC-0005-notification-minimal-set.md && grep -n "個人情報\\|payload\\|精密位置\\|自由記述" docs/rfc/DEC-0005-notification-minimal-set.md`
 
 ## Non-negotiable rules
 - “通すために弱める変更”は禁止
