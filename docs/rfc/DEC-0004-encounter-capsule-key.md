@@ -35,6 +35,7 @@
 - **地域鍵**: 配布・更新・失効・漏洩対応の運用負荷が重すぎる。広域災害時に鍵漏洩リスクが増大
 
 ## 関連
+- RFC-0004: `docs/rfc/RFC-0004-encounter-capsule-key.md`
 - 解消する OPEN: OPEN-007（遭遇カプセルの暗号化鍵は誰が持つか）
 - 前提となる不変条件: IF-BOUNDARY-001（DEC-0003）, IF-RELAY-001, IF-REVEAL-001
 - 残存 OPEN: OPEN-010（Authorized Rescue の定義 — 鍵のクラスは固定済み、運用主体は未定）

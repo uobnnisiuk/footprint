@@ -98,7 +98,7 @@ run_backend_tests_if_present() {
     return 0
   fi
 
-  fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "install pnpm (recommended), npm, or yarn, then rerun ./ci.sh"
+  fail_with_hint "backend/package.json exists but no package manager is available (tests would be skipped)" "run 'corepack enable && corepack prepare pnpm@latest --activate' (recommended) or install npm/yarn, then rerun ./ci.sh"
 }
 
 optional_checks() {
