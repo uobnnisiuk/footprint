@@ -1,4 +1,4 @@
-# RFC-0006: 持続的近接仮説 — BG Encounter 保証線の再検討
+# RFC-0003: 持続的近接仮説 — BG Encounter 保証線の再検討
 
 ## Status
 Draft
