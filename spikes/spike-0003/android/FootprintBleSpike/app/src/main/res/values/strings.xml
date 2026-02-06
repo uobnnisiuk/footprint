@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Footprint BLE Spike</string>
+    <string name="label_device_role">Device role</string>
+    <string name="label_proximity_tag">Proximity tag</string>
+    <string name="label_distance_tag">Distance (m) tag</string>
+    <string name="label_duration_target">Duration target (min)</string>
+    <string name="label_low_power">Low power mode</string>
+    <string name="label_trial_id">Trial ID</string>
+
+    <string-array name="device_roles">
+        <item>alpha</item>
+        <item>beta</item>
+    </string-array>
+    <string-array name="proximity_tags">
+        <item>contact</item>
+        <item>near</item>
+        <item>mid</item>
+        <item>far</item>
+    </string-array>
+    <string-array name="distance_tags">
+        <item>0.5</item>
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+</resources>
