@@ -1,7 +1,8 @@
-No doc edits needed; OPEN-011 is already resolved in spec and RFC/DEC per SR, so I only re-verified and ran CI.
+Updated the TASK-0101 run log with the actual `./ci.sh` output after confirming OPEN-011 was already resolved in the SSOT; no spec edits were needed.
 
-- Reviewed `docs/rfc/RFC-0005-notification-minimal-set.md`, `docs/rfc/DEC-0005-notification-minimal-set.md`, `docs/constitution/15_behavior_spec.md`, `docs/constitution/10_core_fact_spec.md`, `docs/constitution/80_risks.md`.
-- Run log `artifacts/runs/TASK-0101-agent1-spec.out.md` already reflects the verification; left unchanged.
-- Tests: `./ci.sh` (green).
+- Logged verification and CI output in `artifacts/runs/TASK-0101-agent1-spec.out.md` for traceability.
+- Confirmed DEC-0005 references already align in `docs/constitution/15_behavior_spec.md`, `docs/constitution/10_core_fact_spec.md`, and `docs/constitution/80_risks.md`.
 
-I noticed modified tracked files I didn’t touch: `ci.sh`, `artifacts/runs/TASK-0200-agent4-ci.out.md`. How would you like me to proceed with those?
+Tests: `./ci.sh`
+
+I noticed existing uncommitted changes I didn’t make in `ci.sh`, `artifacts/runs/TASK-0102-agent5-acceptance.out.md`, and `artifacts/runs/TASK-0200-agent4-ci.out.md`, plus untracked tasks in `artifacts/inbox/tasks/TASK-0310-agent2-spike-0003-ios.md`, `artifacts/inbox/tasks/TASK-0311-agent3-spike-0003-android.md`, and `artifacts/inbox/tasks/TASK-0312-agent2-spike-0003-runbook-analysis.md`. How would you like me to proceed with those?

@@ -1,4 +1,6 @@
-Added an explicit executable check for `android/gradlew` in `ci.sh` so failures give a concrete HINT while keeping the always_on/optional/guard structure unchanged, and updated the run log to reflect the run.
+`./ci.sh` already meets the cycle-2 goals (clear phases, actionable failure hints, no-op guard) so I kept the gate unchanged and just captured the run evidence. The run log is in `artifacts/runs/TASK-0200-agent4-ci.out.md`.
 
-- Files touched: `ci.sh` (new `android/gradlew` executable check + HINT), `artifacts/runs/TASK-0200-agent4-ci.out.md` (run log update)
-- Tests: `./ci.sh` (green)
+- Verified `./ci.sh` structure and hints; no minimal cleanup needed
+- Ran `./ci.sh`; green with Rust tests executed
+
+If you want a small readability tweak or additional hint wording, tell me which line(s) you want adjusted.

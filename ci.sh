@@ -17,13 +17,28 @@ fail_with_hint() {
   exit 1
 }
 
+format_cmd() {
+  local cmd
+  cmd="$(printf '%q ' "$@")"
+  printf '%s' "${cmd% }"
+}
+
+hint_rerun() {
+  local cmd="$1"
+  local dir="${2:-}"
+  if test -n "$dir"; then
+    printf 'rerun: (cd %s && %s); apply a minimal diff fix, then rerun ./ci.sh' "$dir" "$cmd"
+  else
+    printf 'rerun exactly: %s; apply a minimal diff fix, then rerun ./ci.sh' "$cmd"
+  fi
+}
+
 run() {
   ran=1
   if ! "$@"; then
     local cmd
-    cmd="$(printf '%q ' "$@")"
-    cmd="${cmd% }"
-    fail_with_hint "command failed: ${cmd}" "rerun exactly: ${cmd}; apply a minimal diff fix, then rerun ./ci.sh"
+    cmd="$(format_cmd "$@")"
+    fail_with_hint "command failed: ${cmd}" "$(hint_rerun "$cmd")"
   fi
 }
 
@@ -36,9 +51,8 @@ run_in_dir() {
   ran=1
   if ! (cd "$dir" && "$@"); then
     local cmd
-    cmd="$(printf '%q ' "$@")"
-    cmd="${cmd% }"
-    fail_with_hint "command failed in ${dir}: ${cmd}" "rerun: (cd ${dir} && ${cmd}); apply a minimal diff fix, then rerun ./ci.sh"
+    cmd="$(format_cmd "$@")"
+    fail_with_hint "command failed in ${dir}: ${cmd}" "$(hint_rerun "$cmd" "$dir")"
   fi
 }
 
@@ -76,7 +90,7 @@ always_on_checks() {
   elif command -v node >/dev/null 2>&1; then
     run node -e "JSON.parse(require('fs').readFileSync('docs/constitution/contracts/trace.schema.json','utf8'));"
   else
-    fail_with_hint "need python3 or node to validate docs/constitution/contracts/trace.schema.json" "install python3 or node, then rerun ./ci.sh"
+    fail_with_hint "need python3 or node to validate docs/constitution/contracts/trace.schema.json" "install python3 (preferred) or node so JSON validation runs; verify 'python3 -m json.tool docs/constitution/contracts/trace.schema.json', then rerun ./ci.sh"
   fi
 }
 
@@ -87,7 +101,7 @@ run_rust_tests_if_present() {
   fi
 
   if ! command -v cargo >/dev/null 2>&1; then
-    fail_with_hint "${manifest} exists but cargo is unavailable (tests would be skipped)" "install Rust toolchain until 'cargo --version' works in PATH, then rerun ./ci.sh"
+    fail_with_hint "${manifest} exists but cargo is unavailable (tests would be skipped)" "install the Rust toolchain (e.g. rustup) until 'cargo --version' works in PATH, then rerun ./ci.sh"
   fi
 
   run cargo test --manifest-path "$manifest"
