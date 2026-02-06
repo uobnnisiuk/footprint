@@ -33,10 +33,13 @@ run_in_dir() {
   if ! test -d "$dir"; then
     fail_with_hint "missing directory: ${dir}" "restore ${dir} or remove its check from ./ci.sh"
   fi
-  (
-    cd "$dir"
-    "$@"
-  )
+  ran=1
+  if ! (cd "$dir" && "$@"); then
+    local cmd
+    cmd="$(printf '%q ' "$@")"
+    cmd="${cmd% }"
+    fail_with_hint "command failed in ${dir}: ${cmd}" "rerun: (cd ${dir} && ${cmd}); apply a minimal diff fix, then rerun ./ci.sh"
+  fi
 }
 
 require_file() {
@@ -101,12 +104,12 @@ run_backend_tests_if_present() {
   fi
 
   if command -v npm >/dev/null 2>&1; then
-    run run_in_dir backend npm test
+    run_in_dir backend npm test
     return 0
   fi
 
   if command -v yarn >/dev/null 2>&1; then
-    run run_in_dir backend yarn test
+    run_in_dir backend yarn test
     return 0
   fi
 
@@ -133,7 +136,7 @@ optional_checks() {
     if ! command -v java >/dev/null 2>&1; then
       fail_with_hint "android/gradlew exists but java is unavailable (tests would fail)" "install a JDK and rerun ./ci.sh"
     fi
-    run run_in_dir android ./gradlew test
+    run_in_dir android ./gradlew test
   fi
 }
 

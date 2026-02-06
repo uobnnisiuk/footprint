@@ -1,10 +1,9 @@
-Aligned the share envelope Notification Reference with DEC-0005’s four-field minimal set to remove the remaining mismatch in OPEN‑011 resolution; RFC/DEC and the behavior/core/risk SSOT entries already matched and needed no edits.
+Confirmed OPEN-011 was already resolved consistently across the RFC/DEC and SSOT, so I only added a re-verify entry to the run log and validated CI.
 
-- `docs/constitution/20_share_envelope_spec.md`: renamed the Notification Reference fields to `occurred_at`/`action_kind`/`target_ref`/`accountability_token`, added a short deferment note for the extra refs, and tightened the prohibited content list to match DEC‑0005.
-- `artifacts/runs/TASK-0101-agent1-spec.out.md`: added a 2026‑02‑06 re‑verify entry with the CI result.
+- Updated `artifacts/runs/TASK-0101-agent1-spec.out.md` to record the re-verify checks and CI result.
 
-Tests:
-- `./ci.sh`
+**Tests**
+- `./ci.sh` (green)
 
-Next steps:
-1. Commit the changes if this matches the intended resolution.
+Next step:
+1. Commit the updated run log if you want this re-verify recorded in git.

@@ -49,6 +49,7 @@ Blank is explicit, not inferred.
 - Derived views belong to L2, not L0
 - IF-LOSSLESS-001 を参照
 - **ネット断絶でも機能**: ネットは上積み。ネット断絶でも **LSの記録（少なくとも観測ログがローカルに残ること）**が成立することを要件とする。平時の常時位置追跡/常時アップロードを前提にしない
+- **Encounter保証線**: Capture（ローカル永続）はMUST。Foreground Encounter（FGでの遭遇・交換）はMUST。Background Encounter（BGすれ違い即時）はBE（上積み）。
 
 ## Canonicalization（正規化）
 

@@ -392,6 +392,7 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 疎（山道）向けの仕様。
 
 **本仕様の一次証拠はLS（第三者観測ログ）であり、被災者端末の健全性を前提にしない。relay(B)（痕跡データ中継）は上積みであり、成立保証は置かない（特にiOS BGすれ違いに依存しない）。**
+**Encounter保証線: Capture（ローカル永続）はMUST、Foreground EncounterはMUST、Background Encounterすれ違い即時はBE（上積み）。**
 
 ### 5.1 基本挙動
 

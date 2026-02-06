@@ -1,9 +1,8 @@
-Added a specific failure hint when `./ci.sh` runs a command inside a directory that doesn’t exist, so CI errors point to a concrete fix without changing the overall gate flow.
-
-- Updated `ci.sh` to fail fast with a targeted hint in `run_in_dir` when the directory is missing, keeping the always_on/optional/guard structure intact.
-- Logged the run in `artifacts/runs/TASK-0200-agent4-ci.out.md`.
+Updated `ci.sh` to make subdir failures emit a concrete rerun hint and to simplify subdir invocations, keeping the always_on/optional/guard phases intact. In `ci.sh`, `run_in_dir` now marks work as executed and reports `cd <dir> && <cmd>` on failure, and the npm/yarn + Android call sites now use the helper directly for clearer intent. Logged the run in `artifacts/runs/TASK-0200-agent4-ci.out.md`.
 
 Tests run:
 - `./ci.sh`
 
-If you want, I can also capture the full CI output into the run log, or prepare a commit.
+Next steps (optional):
+1) Review the diff in `ci.sh`.
+2) Commit if it looks good.
