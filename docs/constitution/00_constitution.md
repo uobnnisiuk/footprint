@@ -39,7 +39,10 @@ Reduce early decision mistakes in rescue by providing:
 This folder is the source of truth:
 - docs/constitution/00_constitution.md
 - docs/constitution/10_core_fact_spec.md
+- docs/constitution/15_behavior_spec.md
 - docs/constitution/20_share_envelope_spec.md
+- docs/constitution/30_testplan.md（Acceptance SSOT）
+- docs/constitution/80_risks.md（RISK/OPEN 管理）
 
 Everything else is explanatory or derived.
 
