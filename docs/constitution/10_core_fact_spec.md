@@ -3,6 +3,19 @@
 ## Purpose
 Persist trustworthy **facts** and explicit **blank** as SSOT (L0).
 
+## Primary Evidence (一次証拠)
+
+footprintの一次証拠は **LS（Last Seen / 第三者観測）**を主軸とする。被災者側が操作不能/端末破損でも成立する設計思想である。被災者端末の自己記録（LKG）は有益だが必須前提ではない。
+
+## Terminology
+
+| 用語 | 定義 |
+|------|------|
+| **LKG** | 端末内自己記録の最後の確実点（Self/On-device） |
+| **LS** | 第三者の観測点（Witness/External） |
+
+LKGとLSは別ストリームであり、統合は相関（time/location）＋confidenceで扱う（暗号学的一意紐付けは前提にしない）。
+
 ## Event Model (Append-only)
 An Event is immutable and appended.
 
@@ -35,6 +48,7 @@ Blank is explicit, not inferred.
 - No overwrites (no update-in-place)
 - Derived views belong to L2, not L0
 - IF-LOSSLESS-001 を参照
+- **ネット断絶でも機能**: ネットは上積み。ネット断絶でも **LSの記録（少なくとも観測ログがローカルに残ること）**が成立することを要件とする。平時の常時位置追跡/常時アップロードを前提にしない
 
 ## Canonicalization（正規化）
 

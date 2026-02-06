@@ -30,6 +30,9 @@ run() {
 run_in_dir() {
   local dir="$1"
   shift
+  if ! test -d "$dir"; then
+    fail_with_hint "missing directory: ${dir}" "restore ${dir} or remove its check from ./ci.sh"
+  fi
   (
     cd "$dir"
     "$@"
