@@ -136,6 +136,9 @@ optional_checks() {
     if ! command -v java >/dev/null 2>&1; then
       fail_with_hint "android/gradlew exists but java is unavailable (tests would fail)" "install a JDK and rerun ./ci.sh"
     fi
+    if ! test -x android/gradlew; then
+      fail_with_hint "android/gradlew exists but is not executable" "run 'chmod +x android/gradlew', then rerun ./ci.sh"
+    fi
     run_in_dir android ./gradlew test
   fi
 }

@@ -1,8 +1,4 @@
-Reviewed `./ci.sh`; the always_on/optional/guard structure and HINTs are already clear and concrete, so I left it unchanged and preserved the no‑op guard. Logged today’s run in `artifacts/runs/TASK-0200-agent4-ci.out.md`. Ran `./ci.sh` and it’s green.
+Added an explicit executable check for `android/gradlew` in `ci.sh` so failures give a concrete HINT while keeping the always_on/optional/guard structure unchanged, and updated the run log to reflect the run.
 
-- Tests: `./ci.sh`
-- TST-0200-1: pass (green)
-- TST-0200-2: pass (HINTs already specific; no change)
-- TST-0200-3: pass (no‑op guard intact)
-
-If you want a small refactor to reduce command-format duplication in `./ci.sh`, say the word.
+- Files touched: `ci.sh` (new `android/gradlew` executable check + HINT), `artifacts/runs/TASK-0200-agent4-ci.out.md` (run log update)
+- Tests: `./ci.sh` (green)
