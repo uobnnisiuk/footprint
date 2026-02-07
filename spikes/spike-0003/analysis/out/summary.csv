@@ -1,3 +1,0 @@
-trial_id,os,device_role,peer_id,proximity_tag,distance_m_tag,duration_target_min,duration_target_min_num,app_state,low_power,trial_start_ts,first_detect_ts,t_detect_sec,t_detect_min,success_within_target,source_files
-demo-ios-1,iOS,A,peer-ios,room,1,5,5.0,background,low,2025-02-06T10:00:00+00:00,2025-02-06T10:02:30+00:00,150.0,2.5,true,/home/user/footprint/spikes/spike-0003/analysis/out/demo_logs/demo_ios.jsonl
-demo-android-1,Android,alpha,peer-android,near,2,5,5.0,service,normal,2025-02-06T11:00:00+00:00,2025-02-06T11:08:00+00:00,480.0,8.0,false,/home/user/footprint/spikes/spike-0003/analysis/out/demo_logs/demo_android.jsonl

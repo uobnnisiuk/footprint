@@ -31,43 +31,9 @@ run_task() {
 echo "[run-0300] preflight ./ci.sh"
 ./ci.sh
 
-# --- Add: allow running specific tasks by args (minimal) ---
-TASK_NAMES=()
-if [ "$#" -gt 0 ]; then
-  for t in "$@"; do
-    TASK_NAMES+=("${t}")
-  done
-else
-  # fallback to existing default tasks (keep current behavior)
-  TASK_NAMES=(
-    "TASK-0200-agent4-ci"
-    "TASK-0101-agent1-spec"
-    "TASK-0102-agent5-acceptance"
-  )
-fi
-# --- End add ---
-
-# run task with profile inferred from task name
-run_task_inferred() {
-  local task_name="$1"
-  local task_file="artifacts/inbox/tasks/${task_name}.md"
-  local out_file="artifacts/runs/${task_name}.out.md"
-  local profile
-
-  # infer profile from task name (e.g., TASK-0101-agent1-spec -> agent1)
-  profile=$(echo "$task_name" | sed -n 's/.*-\(agent[0-9]*\)-.*/\1/p')
-
-  if [ -z "$profile" ]; then
-    echo "[run-0300] ERROR: cannot infer profile from task name: $task_name"
-    exit 1
-  fi
-
-  run_task "$profile" "$task_file" "$out_file"
-}
-
-# run tasks in order
-for task_name in "${TASK_NAMES[@]}"; do
-  run_task_inferred "$task_name"
-done
+# Ordered orchestration cycle (agent4 -> agent1 -> agent5)
+run_task agent4 artifacts/inbox/tasks/TASK-0200-agent4-ci.md artifacts/runs/TASK-0200-agent4-ci.out.md
+run_task agent1 artifacts/inbox/tasks/TASK-0101-agent1-spec.md artifacts/runs/TASK-0101-agent1-spec.out.md
+run_task agent5 artifacts/inbox/tasks/TASK-0102-agent5-acceptance.md artifacts/runs/TASK-0102-agent5-acceptance.out.md
 
 echo "[run-0300] done $(date -Iseconds)"
