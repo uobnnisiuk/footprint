@@ -415,41 +415,15 @@ T1（本人発SOS）は発動条件ではなく、**緩和要因（ブースト�
 
 ## 6. 不変条件（IF）サマリ
 
-この仕様で参照する不変条件の一覧。定義本体は `00_constitution.md` を参照。
-
-| IF | 内容 |
-|----|------|
-| IF-LOSSLESS-001 | 観測された痕跡は、UI/集約/フィルタの都合で到達不能にしない（ドリルダウン経路を必ず残す） |
-| IF-SEARCH-001 | オープン探索→「存在のみ」／対象キー探索→「同一性・特定あり得る」 |
-| IF-REVEAL-001 | reveal はサイレントに不可能。閲覧した瞬間に相手へ通知が送達される |
-| IF-RELAY-001 | サイレント遭遇中継。すれ違い＝自動で中継、第三者は読めない |
-| IF-BOUNDARY-001 | relay と reveal の境界は sealed payload の復号の有無で定義する（DEC-0003） |
-| IF-CAPSULE-KEY-001 | 遭遇カプセルの暗号化鍵は Authorized Rescue の公開鍵とする。通行人は復号できない（DEC-0004） |
-| IF-NOTIFY-CONTENT-001 | 通知本文は `occurred_at` / `action_kind` / `target_ref` / `accountability_token` の4点のみ。PII・痕跡内容・精密位置・自由記述を含めない（DEC-0005） |
+全 IF の索引は `00_constitution.md` Invariant Index を参照。
+本文書で定義する IF: IF-REVEAL-001 (Section 4), IF-NOTIFIED-001 (Section 3.2), IF-RELAY-001 (Section 5), IF-NOTIFY-CONTENT-001 (Section 3.4)。
 
 ---
 
-## 7. 残OPEN（未決定）一覧
+## 7. 残OPEN（未決定）
 
-| ID | 内容 | 追跡先 |
-|----|------|--------|
-| OPEN-001 | オープン探索の「存在」の粒度（エリア？時間窓？） | 本文 Section 1.2, `docs/constitution/80_risks.md` OPEN-001 |
-| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/constitution/80_risks.md` OPEN-003 |
-| OPEN-004 | 確度（スコア）の表示上の意味 | `docs/constitution/80_risks.md` OPEN-004 |
-| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/constitution/80_risks.md` OPEN-005 |
-| ~~OPEN-006~~ | ~~relay と reveal の境界定義（どこまでが relay か）~~ | → DEC-0003 で解決。本文 Section 1.1 に境界定義を追記 |
-| ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか~~ | → DEC-0004 で解決。本文 Section 5.1 に暗号化鍵を追記 |
-| OPEN-008 | サイレント遭遇中継のスパム対策 | 本文 Section 5, `docs/constitution/80_risks.md` OPEN-008 |
-| OPEN-010 | 権限救助者（Authorized Rescue）の定義 | 本文 Section 2, `docs/constitution/80_risks.md` OPEN-010 |
-| ~~OPEN-011~~ | ~~通知内容の最小セット~~ | → DEC-0005 で解決。本文 Section 3.4 に通知本文の最小セットを追記 |
-| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法（オフライン relay → 後で受付 等） | 本文 Section 2.1, `docs/constitution/80_risks.md` OPEN-012 |
-| OPEN-013 | T3=ONでオープン探索の粒度が変わる場合の影響 | `docs/constitution/80_risks.md` OPEN-013 |
-
-※OPEN-006（relay/reveal 境界）は DEC-0003 で解決済み（Section 1.1 に境界定義を追記）。
-※OPEN-007（暗号化鍵）は DEC-0004 で解決済み（Section 5.1 に Authorized Rescue 公開鍵を追記）。
-※OPEN-009（link の条件）は Section 2.1 で解決済み。
-※OPEN-011（通知内容の最小セット）は DEC-0005 で解決済み（Section 3.4 に通知本文の最小セットを追記）。
-※全OPEN一覧の索引は `docs/constitution/10_core_fact_spec.md` の OPEN Index と `docs/constitution/80_risks.md` を参照。
+OPEN の一元管理は `80_risks.md` を参照。
+本文書に関連する未解決 OPEN: OPEN-001 (Section 1.2), OPEN-008 (Section 5), OPEN-010 (Section 2), OPEN-012 (Section 2.1), OPEN-013。
 
 ---
 

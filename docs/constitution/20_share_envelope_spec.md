@@ -87,19 +87,8 @@ envelope.integrity に含める情報:
 
 ## Notification Reference（通知に同梱する参照情報）
 
-reveal / link が発生した際の通知ペイロードの最小セット（DEC-0005）。
-envelope に"通知に必要な参照情報だけ"を同梱する範囲を固定する。
-
-| フィールド | 内容 | 備考 |
-|-----------|------|------|
-| occurred_at | 発生時刻（UTC, ms, ISO8601 `Z`） | |
-| action_kind | REVEAL / LINK（詳細分類は後続で拡張可） | 行為の種別 |
-| target_ref | 対象を示す不透明ID（case_id / candidate_id / subject_ref 等） | 型は target_ref で統一 |
-| accountability_token | 監査用トークン（非公開） | 責任追跡 |
-
-注: `action_kind` の詳細分類や追加参照（例: actor_class / scope_summary / case_ref）は後続で決定する。最小セットには含めない。
-
-**禁止**: 閲覧者/実行者の個人情報、痕跡内容（payload/location/state）、精密位置、自由記述を通知に含めない。
+envelope は reveal / link 発生時の通知に必要な参照情報を同梱する。
+フィールド定義・禁止事項は `15_behavior_spec.md` Section 3.4（DEC-0005 / IF-NOTIFY-CONTENT-001）を参照。
 
 ## Outbox
 Outbox stores envelopes pending delivery.

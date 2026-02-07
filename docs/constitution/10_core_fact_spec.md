@@ -49,7 +49,7 @@ Blank is explicit, not inferred.
 - Derived views belong to L2, not L0
 - IF-LOSSLESS-001 を参照
 - **ネット断絶でも機能**: ネットは上積み。ネット断絶でも **LSの記録（少なくとも観測ログがローカルに残ること）**が成立することを要件とする。平時の常時位置追跡/常時アップロードを前提にしない
-- **Encounter保証線**: Capture（ローカル永続）はMUST。Foreground Encounter（FGでの遭遇・交換）はMUST。Background Encounter（BGすれ違い即時）はBE（上積み）。
+- **Encounter保証線**: DEC-0008 参照。Capture（ローカル永続）= MUST、FG Encounter = MUST、BG Encounter = BE。詳細は `15_behavior_spec.md` Section 5
 
 ## Canonicalization（正規化）
 
@@ -129,21 +129,4 @@ T3（災害モード）は、通常運用から災害時運用へ挙動を切り
 
 ## OPEN Index (Unresolved Tracking)
 
-この章は OPEN の所在索引のみを定義する。ここで仕様確定は行わない。
-再確認対象は `OPEN-001,003,004,005,006,007,008,010,011,012,013`。
-状態は `未解決: OPEN-001,003,004,005,008,010,012,013 / 解決済み: OPEN-006,007,011` とする。
-追跡は「一次参照（`docs/constitution/`）→ 補助参照（`docs/rfc/`）」の順で行う。
-
-| ID | 未決テーマ | 一次参照（constitution） | 補助参照（rfc/dec） |
-|----|------------|--------------------------|----------------------|
-| OPEN-001 | オープン探索の「存在」の粒度（エリア/時間窓） | `docs/constitution/15_behavior_spec.md` Sections 1.2, 7（OPEN-001） / `docs/constitution/80_risks.md` OPEN-001 | — |
-| OPEN-003 | 密/疎の判定方法（自動/手動/状況タグ） | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-003） / `docs/constitution/80_risks.md` OPEN-003 | `docs/rfc/RFC-0001-t3-activation-rules.md` OPEN-003 |
-| OPEN-004 | 確度（スコア）の表示上の意味 | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-004） / `docs/constitution/80_risks.md` OPEN-004 | — |
-| OPEN-005 | オープン探索で履歴/パターン/ベースラインを返すか否か | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-005） / `docs/constitution/80_risks.md` OPEN-005 | — |
-| ~~OPEN-006~~ | ~~relay と reveal の境界定義（どこまでが relay か）~~ | **解決済み**: `docs/constitution/15_behavior_spec.md` Section 1.1 / `docs/constitution/20_share_envelope_spec.md` Envelope 構造 | `docs/rfc/DEC-0003-relay-reveal-boundary.md` |
-| ~~OPEN-007~~ | ~~遭遇カプセルの暗号化鍵は誰が持つか~~ | **解決済み**: DEC-0004（`docs/constitution/15_behavior_spec.md` Section 5.1 / `docs/constitution/20_share_envelope_spec.md` sealed payload） | `docs/rfc/DEC-0004-encounter-capsule-key.md` |
-| OPEN-008 | サイレント遭遇中継のスパム対策 | `docs/constitution/15_behavior_spec.md` Sections 5, 7（OPEN-008） / `docs/constitution/80_risks.md` OPEN-008 | — |
-| OPEN-010 | 権限救助者（Authorized Rescue）の定義（組織・運用主体） | `docs/constitution/15_behavior_spec.md` Sections 2, 7（OPEN-010） / `docs/constitution/80_risks.md` OPEN-010 | `docs/rfc/DEC-0004-encounter-capsule-key.md`（残存 OPEN-010） |
-| ~~OPEN-011~~ | ~~通知内容の最小セット（抑止に十分・悪用に不足）~~ | **解決済み**: `docs/constitution/15_behavior_spec.md` Section 3.4 / `docs/constitution/20_share_envelope_spec.md` Notification Reference | `docs/rfc/DEC-0005-notification-minimal-set.md` |
-| OPEN-012 | プラットフォーム不在/通信断時の T2 補完方法 | `docs/constitution/15_behavior_spec.md` Sections 2.1, 7（OPEN-012） / `docs/constitution/80_risks.md` OPEN-012 | `docs/rfc/RFC-0001-t3-activation-rules.md` OPEN-012 |
-| OPEN-013 | T3=ON でオープン探索粒度が変わる場合の影響 | `docs/constitution/15_behavior_spec.md` Section 7（OPEN-013） / `docs/constitution/80_risks.md` OPEN-013 | `docs/rfc/RFC-0001-t3-activation-rules.md` / `docs/rfc/DEC-0001-t3-activation-rules.md` |
+OPEN（未解決の設計判断）の一元管理は `docs/constitution/80_risks.md` を参照。
